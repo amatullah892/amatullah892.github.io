@@ -1,0 +1,34 @@
+h1 {
+}
+h3 {
+  color: darkolivegreen;
+}
+#venue {
+  color: pink;
+}
+section {
+  text-align: center;
+  border: 5px solid lavender;
+}
+
+body {
+  margin-left: 30px;
+  font-family: "oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  background-color: azure;
+}
+
+h1 {
+  font-size: 40px;
+  text-transform: underline;
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
+ul {
+  list-style: none;
+  margin-left: 30px;
+}
