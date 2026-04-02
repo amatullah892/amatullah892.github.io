@@ -1,3 +1,15 @@
+/* 
+DESIGN STRUCTURE
+The chosen w Luni App follows a soft palette ( use of soft shades of pink, purple, whites, etc), modern minimalism (use of generous blank space, soft color and bold typography), and stylized visuals (3D), while follwing this aesthetic into my design I also added certain personal touches.Like:
+- Warm cream background (#fffaf2), and a pale pink and peach shade (#f4dfd8), mirrors Luni's soft palette.
+-Instead of using consistent layout of answers throughout the page, I decided to add different kinds of layouts, where not all of the answers are in a box or in a consistent grid on the page, without it looking disorganized.
+-Made use of bold yet tame colors which add a personal touch in the color palette, making it unique from Luni, using pale olive green (#818263), and a rusted rose pink (#ae6965), adding a elegant and sort of a vintage touch.
+-The use of light weight DM Sans, comes from oberving Luni, the idea is that the person visiting this page, from the first look itself gets the idea of what Luni feels like through the colors and typography.
+-The mix of solid and ridge borders on the box was a deliberate design decision, to avoid the page feeling like a uniform page. When every box looks identical the eye stops follwing them and the user loses their attention, so changing the style of the boxes created a subtle rhythm without being too complex, gentle for the eyes of the user, highlighting the overall idea of Luni.
+-I chose ridge box to add a personal touch of elegance to the page.
+
+*/
+
 body {
   background-color: #fffaf2;
   color: #818263;
@@ -12,11 +24,22 @@ body {
 
 header {
   text-align: center;
-  padding: 64px 0 48px;
+  padding: 48px 0 48px;
+  /* Adding a border bottom to stylize the structure and separate the header from the intro.
+*/
   border-bottom: 2px solid #818263;
   margin-bottom: 48px;
 }
-
+/* 
+-Classes being used to identiy specific groups to assign them attributes, without having the attributes being assigned to all elements.
+-Margin bottom were added to make sure that the content and other elements do not clash with one another, maintaining space outside the border (can be text or box) of the element.
+-Padding was added to maintain space between the content and the border (of box).
+-Font size was used to create heirarchy, the numbers are larger than the rest of the content to grab instant attention.
+-Font weight was used for h2 headings to make them bold while others are regular.
+-Letter spacing was used to spread out the letters slightly to give it a modern professional feel while keeping it clean.
+-Text transform used to automatically convert text to uppercase.
+-Max width used to keep the content central and prevent it from touching the ends of the screen.
+*/
 .course-tag {
   font-size: 0.75rem;
   letter-spacing: 0.15rem;
@@ -36,7 +59,7 @@ h1 {
   color: #ae6965;
   font-size: 0.95rem;
   font-style: italic;
-  text-align: center;
+  text-align: right;
 }
 
 .intro {
@@ -46,16 +69,11 @@ h1 {
 .intro p {
   max-width: 640px;
   margin: 0 auto;
-  margin-bottom: 0;
   text-align: center;
   color: #818263;
   font-style: italic;
   font-size: 1rem;
-  background-color: transparent;
-  border: none;
   min-height: auto;
-  padding-right: 0;
-  padding-left: 0;
 }
 
 .intro strong {
@@ -63,7 +81,11 @@ h1 {
   font-style: normal;
   text-align: center;
 }
-
+/* 
+-Grid has been used to organize the boxes and to turn the elements into a grid container and added two columns of 1fr, and these boxes sit in this grid.
+-For the full width look for certain answers, I used 1/3 to tell the specific box to start at line 1 and end at line 3.
+-I used grid instead of flexbox, because grid is perfect for this layout I can easily change between 2 column layout to full width layout by changing just one line of code, and it keeps my boxes perfectly aligned in rows and columns, making it structured and organized.
+*/
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -79,15 +101,18 @@ h1 {
   padding-right: 20px;
   padding-top: 24px;
   padding-bottom: 24px;
-  margin-bottom: 0;
 }
-
+.box_ridge {
+  background-color: #f4dfd8;
+  border: 3cap ridge #ae6965;
+  min-height: 200px;
+  padding-left: 30px;
+  padding-right: 20px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
 .box_expanded {
   grid-column: 1/3;
-}
-
-.box_pink {
-  background-color: #f4dfd8;
 }
 
 .box1 {
@@ -99,20 +124,14 @@ h1 {
   padding-right: 20px;
   padding-top: 24px;
   padding-bottom: 24px;
-  margin-bottom: 0;
 }
 
 .q_no {
   font-size: larger;
   letter-spacing: 0.15rem;
-  text-transform: uppercase;
   color: #ae6965;
   margin-bottom: 4px;
-  background-color: transparent;
-  border: none;
   min-height: auto;
-  padding-left: 0;
-  padding-right: 0;
   margin-bottom: 4px;
 }
 h2 {
@@ -120,6 +139,7 @@ h2 {
   font-weight: 500;
   color: #1a1a1a;
   margin-bottom: 10px;
+  text-transform: uppercase;
 }
 h3 {
   font-size: 0.85rem;
@@ -128,6 +148,8 @@ h3 {
   color: #888;
   margin-bottom: 14px;
   padding-bottom: 14px;
+  /* Added to h3 (grouped element), to form a thin line under all questions, to maintain uniformity and structure. 
+*/
   border-bottom: 1px solid #ae6965;
 }
 p {
@@ -141,6 +163,8 @@ ol li {
 }
 
 footer {
+  /* Adding border top to mark the end of the page and to separate it from the footer 
+*/
   border-top: 2px solid #818263;
   padding: 32px 0 48px;
   display: flex;
@@ -150,9 +174,4 @@ footer {
   color: #ae6965;
   font-size: 0.82rem;
   text-align: center;
-}
-
-footer a {
-  color: #818263;
-  text-decoration: none;
 }
