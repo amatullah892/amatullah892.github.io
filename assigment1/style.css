@@ -1,12 +1,14 @@
 /* 
 DESIGN STRUCTURE
 The chosen w Luni App follows a soft palette ( use of soft shades of pink, purple, whites, etc), modern minimalism (use of generous blank space, soft color and bold typography), and stylized visuals (3D), while follwing this aesthetic into my design I also added certain personal touches.Like:
-- Warm cream background (#fffaf2), and a pale pink and peach shade (#f4dfd8), mirrors Luni's soft palette.
+- I am aiming for Editorial Minimalism aesthetic.
+-Warm cream background (#fffaf2), and a pale pink and peach shade (#f4dfd8), mirrors Luni's soft palette.
 -Instead of using consistent layout of answers throughout the page, I decided to add different kinds of layouts, where not all of the answers are in a box or in a consistent grid on the page, without it looking disorganized.
 -Made use of bold yet tame colors which add a personal touch in the color palette, making it unique from Luni, using pale olive green (#818263), and a rusted rose pink (#ae6965), adding a elegant and sort of a vintage touch.
 -The use of light weight DM Sans, comes from oberving Luni, the idea is that the person visiting this page, from the first look itself gets the idea of what Luni feels like through the colors and typography.
--The mix of solid and ridge borders on the box was a deliberate design decision, to avoid the page feeling like a uniform page. When every box looks identical the eye stops follwing them and the user loses their attention, so changing the style of the boxes created a subtle rhythm without being too complex, gentle for the eyes of the user, highlighting the overall idea of Luni.
+-The mix of solid and ridge borders on the box was a deliberate design decision, to avoid the page feeling too uniform. When every box looks identical the eye stops follwing them and the user loses their attention, so changing the style of the boxes created a subtle rhythm without being too complex, gentle for the eyes of the user, highlighting the overall idea of Luni.
 -I chose ridge box to add a personal touch of elegance to the page.
+-Ridge adds a 3D element into the design that conincides with Luni.
 
 */
 
@@ -92,7 +94,8 @@ h1 {
   gap: 20px;
   margin-bottom: 64px;
 }
-
+/* Added border and background color to make a box for the content.
+*/
 .box {
   background-color: #f4dfd8;
   border: 2px solid #ae6965;
@@ -103,8 +106,7 @@ h1 {
   padding-bottom: 24px;
 }
 .box_ridge {
-  background-color: #f4dfd8;
-  border: 3cap ridge #ae6965;
+  border: 3cap outset #ae6965;
   min-height: 200px;
   padding-left: 30px;
   padding-right: 20px;
