@@ -20,3 +20,7 @@ video {
   width: 600px;
   height: 400px;
 }
+
+: :root {
+  --primary-color: rgb --secondary-color: red;
+}
