@@ -1,120 +1,24 @@
-:root {
-  --primary-bg-color: #f4f4f4;
-  --text-color: #333;
-  --main-bg-color: #333;
-  --main-text-color: #fff;
-  --main-btn-bg-color: #938989;
-}
-
-body,
-h1,
-p,
-ul {
-  margin: 0;
-  padding: 0;
-}
-
+/* adding a linear gradient background using soft greens and blue to make it look very fresh and motivating.*/
 body {
-  font-family: "Arial", sans-serif;
-  background-color: var(--primary-bg-color);
-  color: var(--text-color);
-  line-height: 1.6;
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #9dccd0, #b4e0ee, #cbe6c7, #8fc096);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  padding: 30px 16px 0;
 }
 
-/* Add additional styles as needed */
+.glass-effect {
+  /* semi transparent glass like background to make it seem 
+  very dream-like and prevent the user from focusing more on the 
+  details of the bacground as it may detain their focus from the 
+  actual features and from studying.*/
 
-/* Create a container for the main content */
-.container {
-  max-width: 1000px;
-  width: 100%;
-  padding: 10px;
-}
+  background-color: rgba(255, 255, 255, 0.3);
 
-/* Header styling */
-header {
-  background-color: var(--main-bg-color);
-  color: var(--main-text-color);
-  padding: 10px 0;
-  text-align: center;
-  width: 100%;
-}
-
-/* Navigation styling */
-nav {
-  margin-top: 20px;
-  text-align: center;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-}
-
-nav ul li {
-  margin-right: 20px;
-}
-
-nav a {
-  text-decoration: none;
-  color: var(--text-color);
-}
-
-/* Media player styling */
-.media-player {
-  width: 100%;
-  margin: 0 auto;
-}
-
-.media-player video {
-  max-width: 100%;
-}
-
-.custom-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 10px;
-  width: 100%;
-}
-
-.custom-controls button {
-  background-color: var(--main-btn-bg-color);
-  color: var(--main-text-color);
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 10px;
-  background-color: #ddd;
-  margin-top: 10px;
-  overflow: hidden;
-}
-
-.progress-bar span {
-  display: block;
-  height: 100%;
-  background-color: var(--main-bg-color);
-  width: 0;
-  transition: width 0.3s ease;
-}
-
-/* Footer styling */
-footer {
-  background-color: var(--main-bg-color);
-  color: var(--main-text-color);
-  text-align: center;
-  padding: 10px 0;
-  width: 100%;
+  /* the blur effect*/
+  backdrop-filter: blur(100px);
+  /* supports safari*/
+  -webkit-backdrop-filter: blur(100px);
 }
