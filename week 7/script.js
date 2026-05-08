@@ -26,7 +26,7 @@ pauseButton.addEventListener("click", pauseAudio);
 function pauseAudio() {
   airportAudio.pause();
 }
-//similarly acess the pop button
+//similarly access the pop button
 
 const popButton = document.querySelector("#pop-button");
 console.log(popSound);
