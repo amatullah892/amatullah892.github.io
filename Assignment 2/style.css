@@ -248,7 +248,7 @@ nav a {
     transform 0.15s ease;
 }
 
-/.ctrl-btn-hover {
+.ctrl-btn-hover {
   background: rgba(255, 255, 255, 0.5);
   /* bigger on hover, making the hover obvious*/
   transform: scale(1.12);
