@@ -1,12 +1,39 @@
-/* adding a linear gradient background using soft greens and blue to make it look very fresh and motivating.*/
+/* adding a linear gradient background using using blues and purples to make it look very calming and serene, I will be potraying a night time.*/
 body {
   font-family: "Poppins", sans-serif;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #9dccd0, #b4e0ee, #cbe6c7, #8fc096);
+  background: linear-gradient(to bottom, #0d1b4b, #224e78, #6363e0, #7abded);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 30px 16px 0;
+
+  /* Leaving space for trees so the player and trees do not clash*/
+  padding-bottom: 200px;
+  padding-top: 40px;
+  /* so that the trees do not create a scroll bar function.*/
+  overflow-x: hidden;
+}
+
+/* Navigation styling */
+nav {
+  margin-top: 20px;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-color);
 }
 
 .glass-effect {
@@ -21,4 +48,381 @@ body {
   backdrop-filter: blur(100px);
   /* supports safari*/
   -webkit-backdrop-filter: blur(100px);
+}
+
+/* adding a glowing circular moon that pulses slowly, indicating the night time*/
+.moon {
+  /* defining its position on the web page.*/
+  position: fixed;
+  top: 30px;
+  right: 60px;
+  width: 64px;
+  height: 64px;
+  /* making it circular, curving corners.*/
+  border-radius: 50%;
+
+  /* adding color properties to the moon, radial gradience for a more real look and to add more depth to the moon*/
+
+  background: radial-gradient(circle at 38% 38%, #f0f4ff, #c8d8f8);
+  /* adding glow around the circular moon*/
+  box-shadow:
+    0 0 20px rgba(200, 220, 255, 0.6),
+    0 0 60px rgb(160, 190, 255, 0.3),
+    0 0 100px rgba(120, 160, 255, 0.15);
+
+  /* adding a pulse animations, as it is a simple function I have added it in CSS and not JS as JS is good for complex interactions.*/
+  animation: moonPulse 4s ease-in-out infinite alternate;
+  /* no function or interaction just a part of the background*/
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes moonPulse {
+  from {
+    box-shadow: 
+    /* instead of specifing the color as 'white" or "blue", i went with rgba as it makes it allows me to be more specific.*/
+      0 0 20px rgba(200, 220, 255, 0.5),
+      0 0 60x rgba(160, 190, 255, 0.2);
+  }
+  to {
+    box-shadow:
+      0 0 20px rgba(200, 220, 255, 0.8),
+      0 0 80px rgba(160, 190, 255, 0.5),
+      0 0 120px rgba(120, 160 255, 0.25);
+  }
+}
+
+/* making a star container where the stars will sit, without being scattered across the whole page.*/
+.stars-container {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 60%;
+  /* Mouse clicks make no differenc, it passes through making it an element fused to the background without any other function*/
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Now making the actual stars that will go inside the container, stars will be tiny circles. I used CSS to add this animation as it is a simple ui-focused interaction and not so complex to be added in Javascript*/
+
+.star {
+  /*to place it in its parent container.*/
+  position: fixed;
+  /*making it into tiny whte circles, using border radius to round the corners.*/
+  width: 100%;
+  height: 65%;
+  background: white;
+  border-radius: 50%;
+  /* for a more engaging yet calming experiencing, adding twinkling animation to the stars, this logic will create a smooth and continous back and forth blinking effect that will keep running.*/
+  animation: twinkle 2s ease-in-out infinite alternate;
+}
+
+/* increasing and decreasing opacity of the star to give is a twinkling effect.*/
+@keyframes twinkle {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* adding a glass-effect on the player card for a dreamy effect and to add depth and to help enhance the focus of the user by blurring the background, and the background gradience adds a colorful background to the card.*/
+.player-card {
+  /*translucent white, to add the glass base.*/
+  background: rgba(255, 255, 255, 0.2);
+
+  /*blurring it to make a frosted look*/
+  backdrop-filter: blur(18px);
+  /*safari supported*/
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  /* curving the corners for a softer look*/
+  border-radius: 24px;
+
+  /* positioning the card */
+  padding: 24px;
+  width: 90%;
+  max-width: 480px;
+
+  /* shadow to add depth against the bacground*/
+  box-shadow: 0 8px 32px rgba(0, 80, 60, 0.15);
+
+  /* sits above trees and star*/
+  position: relative;
+  z-index: 10;
+}
+
+/* adding the title to the card*/
+.player-card-h2 {
+  text-align: center;
+  color: #c8e8ff;
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin-bottom: 20px;
+  letter-spacing: 0.12rem;
+  text-transform: uppercase;
+  opacity: 0.7;
+  letter-spacing: 0.12rem;
+}
+
+/* adding track info, of each track playing*/
+.track-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.track-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e8f4ff;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.track-artist {
+  font-size: 0.82rem;
+  color: #7aafdf;
+  font-style: italic;
+  font-weight: 900%;
+}
+/* container for a progressing bar to show the audios timeline, bar fills in as audio progresses*/
+.progress-container {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 3px;
+  margin-top: 12px;
+  /* prevent the fill from going outside of it dedicated place.*/
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* The progress bar*/
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  /* JS will update this as audio plays*/
+  background: linear-gradient(to right, #3ab87a, #3a9cc8);
+  border-radius: 3px;
+  transition: width 0.1s linear;
+}
+
+/* time display below the progress bar, showing how long the audio is.*/
+.time-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #5a8aaf;
+  margin-bottom: 18px;
+}
+.controls {
+  /* aligning all the content to be in the center, making it look organized. Controls like play, mute, fast forward,and like.*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+/* basic style for all round icon button like, play, mute/unmute, like, etc.*/
+
+.ctrl-btn {
+  background: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  /* making it circular*/
+  border-radius: 50px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  /* smooth hover effect on button, so the user knows they have a function and they can click that button and that it is not just an image.*/
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+/.ctrl-btn-hover {
+  background: rgba(255, 255, 255, 0.5);
+  /* bigger on hover, making the hover obvious*/
+  transform: scale(1.12);
+  box-shadow: 12px rgba(100, 160, 255, 0.35);
+}
+
+.ctrl-btn-active {
+  /* smaller on click, making it obvious that the button is clicked*/
+  transform: scale(0.93);
+}
+
+/* Buttons icons are images, so seeting a consistent size, so they all uniform.*/
+
+.ctrl-btn-img {
+  width: 22px;
+  height: 22px;
+  /* making the icons brighter against the dark background.*/
+  filter: brightness(10);
+}
+
+/*The heart(like) button*/
+.likes-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #7aafdf;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* audio selectors, for users to switch between 2 other audios*/
+
+.track-pills {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.track-pill {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(160, 190, 255, 0.22);
+  border-radius: 20px;
+  padding: 7px 15px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.78;
+  font-weight: 500;
+  color: #90c0e8;
+  cursor: pointer;
+}
+
+.track-pill-hover {
+  background: rgba(100, 160, 255, 0.2);
+  transform: scale(1.12);
+  box-shadow: 12px rgba(100, 160, 255, 0.35);
+}
+
+/* current playing track gets a blue glow, so it is obvious to the user which track is playing.*/
+.track-pill-active {
+  background: rgba(58, 127, 213, 0.45);
+  border-color: rgba(100, 180, 255, 0.6);
+  border-radius: 20px;
+  color: #d0eaff;
+  box-shadow: 0 0 14px rgba(60, 140, 255, 0.4);
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+/* I want to add more interactivity to the page, as of now it is looking to plain, so I am going to add  SVG trees which will be fixed to the bottom of the page and they will wave as the mouse hover on them.*/
+
+.forest {
+  position: fixed;
+  height: 210px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding: 0 8px;
+  z-index: 5;
+  pointer-events: all;
+}
+
+/* properties for the individual tree*/
+.tree {
+  /* to create fixed size trees inside a flexbox container.*/
+  cursor: pointer;
+  flex-shrink: 0;
+
+  /* making sure the tree pivots from its base when it moves, make it realistic and natural.*/
+
+  transform-origin: bottom center;
+  /* very gentle sway*/
+  animation: idleWind 6s ease-in-out infinite alternate;
+
+  transition: filter 0.3s ease;
+
+  /*making the tree darker as it is night time.*/
+  filter: brightness(0.45), saturate(0.6);
+}
+
+/* adding animation phase, when each tree should move.*/
+
+.tree-1 {
+  animation-delay: 0s;
+}
+.tree-2 {
+  animation-delay: 0.8s;
+}
+.tree-3 {
+  animation-delay: 1.6s;
+}
+.tree-4 {
+  animation-delay: 0.4s;
+}
+.tree-5 {
+  animation-delay: 1.2s;
+}
+.tree-6 {
+  animation-delay: 0.6s;
+}
+.tree-7 {
+  animation-delay: 2s;
+}
+.tree-8 {
+  animation-delay: 1s;
+}
+
+@keyframes idleWind {
+  from {
+    transform: rotate(-0.6deg);
+  }
+  from {
+    transform: rotate(0.6deg);
+  }
+}
+
+/* hovering function, the individual tree sways when user hovers over it.*/
+
+.tree-hover {
+  animation: hoverSway 0.9s ease-in-out infinite alternate;
+  /* slightly brighter on hover, so it is obvious it reacted.*/
+  filter: brightness(0.7);
+}
+
+@keyframes hoverSway {
+  from {
+    transform: rotate(-6deg);
+  }
+  from {
+    transform: rotate(6deg);
+  }
+}
+
+/* adding a breeze, so when the web loads it will send a ripple through all the trees.*/
+
+.tree-breeze {
+  animation: breeze 1.8 ease-in-out forwards;
+}
+
+@keyframes breeze {
+  0% {
+    transform: rotate(0deg);
+  }
+  18% {
+    transform: rotate(7deg);
+  }
+  40% {
+    transform: rotate(-60deg);
+  }
+  60% {
+    transform: rotate(4deg);
+  }
+  80% {
+    transform: rotate(-1.5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }

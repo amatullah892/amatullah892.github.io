@@ -8,13 +8,196 @@
     <link rel="stylesheet" href="reset.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- google font, Poppins is used for a friendly, clean and calm look-->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+
     <div class="glass-effect"></div>
     <title>HEALAX</title>
-    <h1>HEALAX</h1>
   </head>
-  <body></body>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Videos</a></li>
+        <li><a href="#">Music</a></li>
+        <li><a href="#">Playlists</a></li>
+      </ul>
+    </nav>
+    <div class="moon"></div>
+    <div class="star"></div>
+    <div class="stars-container" id="stars-container"></div>
+    <div class="player-card">
+      <h2>HEALAX</h2>
+      <div class="track-info">
+        <div class="track-title" id="tract-title">Chill FM</div>
+        <div class="track-artist" id="track-artist">Dope Cat</div>
+      </div>
+
+      <div class="progress-container" id="progress-container "></div>
+      <div class="progress-bar"></div>
+      <div class="time-row">
+        <span id="time-current">0:00</span>
+        <span id="time-total">0:00</span>
+      </div>
+      <div class="controls">
+        <button class="ctrl-btn" id="crtl-btn" title="play/pause">
+          <img
+            src="https://img.icons8.com/ios-glyphs/30/play--v2.png"
+            alt="play"
+          />
+        </button>
+        <button class="ctrl-btn" id="mute-unmute-button" title="mute-unmute">
+          <img
+            src="https://img.icons8.com/ios-glyphs/30/high-volume--v2.png"
+            alt="volume"
+          />
+        </button>
+
+        <button class="ctrl-btn" id="fast-forward-button" title="fast-speed">
+          <img
+            src="https://img.icons8.com/ios-glyphs/30/fast-forward--v2.png"
+            alt="forwards"
+          />
+        </button>
+        <div class="likes-btn">
+          <button class="crtl-btn" id="heart-button" title="like">
+            <img
+              src="https://img.icons8.com/ios-glyphs/30/like--v1.png"
+              alt="like"
+            />
+          </button>
+          <span id="likes">0</span>
+        </div>
+      </div>
+      <div class="track-pills">
+        <button class="track-pill-active" id track-btn-0>Chill FM</button>
+        <button class="track-pill" id track-btn-1>All Of My</button>
+        <button class="track-pill" id track-btn-2>Golden Age</button>
+      </div>
+    </div>
+    <div class="forest" id="forest">
+      <!-- Small round tree with three different colors to add layers and depth.-->
+      <svg
+        class="tree"
+        width="65"
+        height="100"
+        viewBox="0 0 80 120"
+        aria-hidden="true"
+      >
+        <rect x="34" y="85" width="12" height="35" rx="3" fill="#5c3d1e" />
+        <ellipse cx="40" cy="55" rx="34" rv="38" fill="#1a6b44" />
+        <ellipse cx="40" cy="47" rx="28" rv="30" fill="#228855" />
+        <ellipse cx="40" cy="36" rx="18" rv="16" fill="#1a6b44" />
+      </svg>
+      <!-- Tall pine tree with three different colors to add layers and depth.-->
+      <svg
+        class="tree"
+        width="60"
+        height="145"
+        viewBox="0 0 70 165"
+        aria-hidden="true"
+      >
+        <rect x="29" y="125" width="12" height="40" rx="3" fill="#5c3d1e" />
+        <polygon points="35,5 10,52 60,52" fill="#1a6b44" />
+        <polygon points="35,28 7,76 63,76" fill="#228855" />
+        <polygon points="35,52 4,100 66,100" fill="2faa6e" />
+        <polygon points="35,72 2,122 68,122" fill="38bb78" />
+      </svg>
+      <!-- Narrow pointy tree with three different colors to add layers and depth.-->
+      <svg
+        class="tree"
+        width="44"
+        height="148"
+        viewBox="0 0 54 172"
+        aria-hidden="true"
+      >
+        <rect x="22" y="138" width="10" height="34" rx="2" fill="#5c3d1e" />
+        <ellipse cx="27" cy="64" rx="18" ry="78" fill="#1a6b44" />
+        <ellipse cx="27" cy="57" rx="13" ry="68" fill="#228855" />
+        <ellipse cx="27" cy="50" rx="9" ry="56" fill="#2faa6e" />
+      </svg>
+      <!-- Large round tree with three different colors to add layers and depth.-->
+      <svg
+        class="tree"
+        width="95"
+        height="162"
+        viewBox="0 0 105 186"
+        aria-hidden="true"
+      >
+        <rect x="44" y="136" width="17" height="50" rx="4" fill="#4a3018" />
+        <ellipse cx="52" cy="90" rx="48" ry="52" fill="#185e3c" />
+        <ellipse cx="52" cy="82" rx="42" ry="45" fill="#208850" />
+        <ellipse cx="42" cy="68" rx="28" ry="26" fill="#28a060" />
+        <ellipse cx="66" cy="76" rx="22" ry="20" fill="#2d9f65" />
+        <ellipse cx="52" cy="58" rx="20" ry="18" fill="#185e3c" />
+      </svg>
+      <!-- tallest center tree with three different colors to add layers and depth.-->
+      <svg
+        class="tree"
+        width="105"
+        height="178"
+        viewBox="0 0 115 202"
+        aria-hidden="true"
+      >
+        <rect x="48" y="154" width="19" height="48" rx="4" fill="#3d2610" />
+        <ellipse cx="57" cy="106" rx="54" ry="58" fill="#165838" />
+        <ellipse cx="57" cy="97" rx="48" ry="50" fill="#1e8048" />
+        <ellipse cx="46" cy="81" rx="30" ry="28" fill="#26985c" />
+        <ellipse cx="70" cy="89" rx="25" ry="22" fill="#2a9a5e" />
+        <ellipse cx="57" cy="67" rx="22" ry="20" fill="#33b06a" />
+        <ellipse cx="50" cy="56" rx="14" ry="13" fill="#3ec274" />
+      </svg>
+      <!-- medium pine tree with three different colors to add layers and depth.-->
+      <svg
+        class="tree"
+        width="70"
+        height="128"
+        viewBox="0 0 78 150"
+        aria-hidden="true"
+      >
+        <rect x="32" y="112" width="14" height="38" rx="3" fill="#5c3d1e" />
+        <polygon points="39,8 14,54 64,54" fill="#1f7a4e" />
+        <polygon points="39,30 10,78 68,78" fill="#289960" />
+        <polygon points="39,54 6,105 72,105" fill="#33aa6e" />
+        <polygon points="39,72 4,125 74,125" fill="#3aba7a" />
+      </svg>
+      <!-- slim pointy tree with three different colors to add layers and dept.-->
+      <svg
+        class="tree"
+        width="46"
+        height="152"
+        viewBox="0 0 56 176"
+        aria-hidden="true"
+      >
+        <rect x="23" y="140" width="10" height="36" rx="2" fill="#5c3d1e" />
+        <ellipse cx="28" cy="66" rx="20" ry="78" fill="#1a6b44" />
+        <ellipse cx="28" cy="59" rx="15" ry="68" fill="#228855" />
+        <ellipse cx="28" cy="51" rx="10" ry="56" fill="#2faa6e" />
+      </svg>
+      <!-- small round tree with three different colors to add layers and dept.-->
+      <svg
+        class="tree"
+        width="68"
+        height="110652"
+        viewBox="0 0 78 126"
+        aria-hidden="true"
+      >
+        <rect x="32" y="90" width="14" height="36" rx="3" fill="#5c3d1e" />
+        <ellipse cx="39" cy="60" rx="34" ry="38" fill="#1a6b44" />
+        <ellipse cx="39" cy="52" rx="28" ry="30" fill="#228855" />
+        <ellipse cx="39" cy="40" rx="18" ry="16" fill="#2faa6e" />
+      </svg>
+    </div>
+    <!-- Footer Section -->
+    <footer>
+      <p>&copy; 2024 Media Player Website. All rights reserved.</p>
+      <a href="https://icons8.com/icon/59862/play">Play</a> icon by
+      <a href="https://icons8.com">Icons8</a>
+      <a href="https://icons8.com/icon/61012/pause">Pause</a> icon by
+      <a href="https://icons8.com">Icons8</a>
+    </footer>
+  </body>
 </html>
