@@ -1,22 +1,28 @@
 /* adding a linear gradient background using using blues and purples to make it look very calming and serene, I will be potraying a night time.*/
+:root {
+  --text-color: #e8f4ff;
+  --muted-text: #9ec8ed;
+}
+
 body {
+  position: relative;
   font-family: "Poppins", sans-serif;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #0d1b4b, #224e78, #6363e0, #7abded);
+  color: var(--text-color);
+  background: linear-gradient(to bottom, #0d1b4b, #224e78, #5e5efe, #7abded);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 16px 0;
-
   /* Leaving space for trees so the player and trees do not clash*/
-  padding-bottom: 200px;
-  padding-top: 40px;
+  padding: 40px 16px 32px;
   /* so that the trees do not create a scroll bar function.*/
   overflow-x: hidden;
 }
 
 /* Navigation styling */
 nav {
+  position: relative;
+  z-index: 20;
   margin-top: 20px;
   text-align: center;
 }
@@ -25,15 +31,13 @@ nav ul {
   list-style: none;
   display: flex;
   justify-content: center;
-}
-
-nav ul li {
-  margin-right: 20px;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 nav a {
-  text-decoration: none;
   color: var(--text-color);
+  text-decoration: none;
 }
 
 .glass-effect {
@@ -41,23 +45,27 @@ nav a {
   very dream-like and prevent the user from focusing more on the 
   details of the bacground as it may detain their focus from the 
   actual features and from studying.*/
-
+  position: absolute;
+  inset: 0;
+  min-height: 100%;
+  z-index: 0;
   background-color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
 
   /* the blur effect*/
-  backdrop-filter: blur(100px);
+  backdrop-filter: blur(8px);
   /* supports safari*/
-  -webkit-backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 /* adding a glowing circular moon that pulses slowly, indicating the night time*/
 .moon {
   /* defining its position on the web page.*/
-  position: fixed;
-  top: 30px;
-  right: 60px;
-  width: 64px;
-  height: 64px;
+  position: absolute;
+  top: clamp(28px, 5vw, 54px);
+  right: clamp(24px, 8vw, 88px);
+  width: clamp(48px, 8vw, 72px);
+  height: clamp(48px, 8vw, 72px);
   /* making it circular, curving corners.*/
   border-radius: 50%;
 
@@ -86,7 +94,7 @@ nav a {
   }
   to {
     box-shadow:
-      0 0 20px rgba(200, 220, 255, 0.8),
+      0 0 28px rgba(200, 220, 255, 0.8),
       0 0 80px rgba(160, 190, 255, 0.5),
       0 0 120px rgba(120, 160 255, 0.25);
   }
@@ -94,13 +102,12 @@ nav a {
 
 /* making a star container where the stars will sit, without being scattered across the whole page.*/
 .stars-container {
-  position: fixed;
+  position: absolute;
   top: 0%;
   left: 0%;
   width: 100%;
-  height: 60%;
+  height: min(64vh, 520px);
   /* Mouse clicks make no differenc, it passes through making it an element fused to the background without any other function*/
-
   pointer-events: none;
   z-index: 0;
 }
@@ -109,10 +116,10 @@ nav a {
 
 .star {
   /*to place it in its parent container.*/
-  position: fixed;
+  position: absolute;
   /*making it into tiny whte circles, using border radius to round the corners.*/
-  width: 100%;
-  height: 65%;
+  width: 3px;
+  height: 3px;
   background: white;
   border-radius: 50%;
   /* for a more engaging yet calming experiencing, adding twinkling animation to the stars, this logic will create a smooth and continous back and forth blinking effect that will keep running.*/
@@ -132,6 +139,8 @@ nav a {
 /* adding a glass-effect on the player card for a dreamy effect and to add depth and to help enhance the focus of the user by blurring the background, and the background gradience adds a colorful background to the card.*/
 .player-card {
   /*translucent white, to add the glass base.*/
+  position: relative;
+  z-index: 10;
   background: rgba(255, 255, 255, 0.2);
 
   /*blurring it to make a frosted look*/
@@ -142,11 +151,14 @@ nav a {
   border: 1px solid rgba(255, 255, 255, 0.45);
   /* curving the corners for a softer look*/
   border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 80, 60, 0.15);
 
   /* positioning the card */
+  padding: 28px 26px 24px;
+
+  width: min(90%, 480px);
+  margin-top: clamp(36px, 8vh, 80px);
   padding: 24px;
-  width: 90%;
-  max-width: 480px;
 
   /* shadow to add depth against the bacground*/
   box-shadow: 0 8px 32px rgba(0, 80, 60, 0.15);
@@ -163,9 +175,8 @@ nav a {
   font-size: 0.95rem;
   font-weight: 400;
   margin-bottom: 20px;
-  letter-spacing: 0.12rem;
   text-transform: uppercase;
-  opacity: 0.7;
+  opacity: 0.8;
   letter-spacing: 0.12rem;
 }
 
@@ -185,16 +196,16 @@ nav a {
 
 .track-artist {
   font-size: 0.82rem;
-  color: #7aafdf;
+  color: #002a51;
   font-style: italic;
-  font-weight: 900%;
+  font-weight: 600;
 }
 /* container for a progressing bar to show the audios timeline, bar fills in as audio progresses*/
 .progress-container {
   width: 100%;
-  height: 4px;
+  height: 6px;
   background: rgba(255, 255, 255, 0.35);
-  border-radius: 3px;
+  border-radius: 1000px;
   margin-top: 12px;
   /* prevent the fill from going outside of it dedicated place.*/
   overflow: hidden;
@@ -208,7 +219,7 @@ nav a {
   width: 0%;
   /* JS will update this as audio plays*/
   background: linear-gradient(to right, #3ab87a, #3a9cc8);
-  border-radius: 3px;
+  border-radius: 1000px;
   transition: width 0.1s linear;
 }
 
@@ -218,6 +229,7 @@ nav a {
   justify-content: space-between;
   font-size: 0.72rem;
   color: #5a8aaf;
+  margin-top: 8px;
   margin-bottom: 18px;
 }
 .controls {
@@ -243,19 +255,20 @@ nav a {
   justify-content: center;
   cursor: pointer;
   /* smooth hover effect on button, so the user knows they have a function and they can click that button and that it is not just an image.*/
-  transition:
-    background 0.2s ease,
-    transform 0.15s ease;
+  transition:;
+  background: 0.2s ease;
+  background: 0.2s ease;
+  transform: 0.15s ease;
 }
 
 .ctrl-btn-hover {
   background: rgba(255, 255, 255, 0.5);
   /* bigger on hover, making the hover obvious*/
-  transform: scale(1.12);
-  box-shadow: 12px rgba(100, 160, 255, 0.35);
+  transform: scale(1.08);
+  box-shadow: 0 0 12px rgba(100, 160, 255, 0.35);
 }
 
-.ctrl-btn-active {
+.ctrl-btn:active .ctrl-btn.is-active {
   /* smaller on click, making it obvious that the button is clicked*/
   transform: scale(0.93);
 }
@@ -285,6 +298,8 @@ nav a {
   display: flex;
   gap: 8px;
   justify-content: center;
+  margin-top: 22px;
+  flex-wrap: wrap;
 }
 
 .track-pill {
@@ -297,12 +312,16 @@ nav a {
   font-weight: 500;
   color: #90c0e8;
   cursor: pointer;
+  transition:;
+  background: 0.2s ease;
+  box-shadow: 0.2s ease;
+  transform: 0.15s ease;
 }
 
 .track-pill-hover {
   background: rgba(100, 160, 255, 0.2);
-  transform: scale(1.12);
-  box-shadow: 12px rgba(100, 160, 255, 0.35);
+  transform: scale(1.06);
+  box-shadow: 0 0 12px rgba(100, 160, 255, 0.35);
 }
 
 /* current playing track gets a blue glow, so it is obvious to the user which track is playing.*/
@@ -310,7 +329,7 @@ nav a {
   background: rgba(58, 127, 213, 0.45);
   border-color: rgba(100, 180, 255, 0.6);
   border-radius: 20px;
-  color: #d0eaff;
+
   box-shadow: 0 0 14px rgba(60, 140, 255, 0.4);
   padding-left: 7px;
   padding-right: 7px;
@@ -319,14 +338,16 @@ nav a {
 /* I want to add more interactivity to the page, as of now it is looking to plain, so I am going to add  SVG trees which will be fixed to the bottom of the page and they will wave as the mouse hover on them.*/
 
 .forest {
-  position: fixed;
-  height: 210px;
+  position: relative;
+  width: min(100%, 980px);
+  height: clamp(128px, 24vw, 210px);
+  margin-top: clamp(32px, 8vh, 88px);
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
   padding: 0 8px;
   z-index: 5;
-  pointer-events: all;
+  pointer-events: auto;
 }
 
 /* properties for the individual tree*/
@@ -334,6 +355,8 @@ nav a {
   /* to create fixed size trees inside a flexbox container.*/
   cursor: pointer;
   flex-shrink: 0;
+  max-width: 11%;
+  height: auto;
 
   /* making sure the tree pivots from its base when it moves, make it realistic and natural.*/
 
@@ -349,28 +372,28 @@ nav a {
 
 /* adding animation phase, when each tree should move.*/
 
-.tree-1 {
+.tree:nth-child(1) {
   animation-delay: 0s;
 }
-.tree-2 {
+.tree:nth-child(2) {
   animation-delay: 0.8s;
 }
-.tree-3 {
+.tree:nth-child(3) {
   animation-delay: 1.6s;
 }
-.tree-4 {
+.tree:nth-child(4) {
   animation-delay: 0.4s;
 }
-.tree-5 {
+.tree:nth-child(5) {
   animation-delay: 1.2s;
 }
-.tree-6 {
+.tree:nth-child(6) {
   animation-delay: 0.6s;
 }
-.tree-7 {
+.tree:nth-child(7) {
   animation-delay: 2s;
 }
-.tree-8 {
+.tree:nth-child(8) {
   animation-delay: 1s;
 }
 
@@ -378,14 +401,14 @@ nav a {
   from {
     transform: rotate(-0.6deg);
   }
-  from {
+  to {
     transform: rotate(0.6deg);
   }
 }
 
 /* hovering function, the individual tree sways when user hovers over it.*/
 
-.tree-hover {
+.tree:hover {
   animation: hoverSway 0.9s ease-in-out infinite alternate;
   /* slightly brighter on hover, so it is obvious it reacted.*/
   filter: brightness(0.7);
@@ -393,13 +416,12 @@ nav a {
 
 @keyframes hoverSway {
   from {
-    transform: rotate(-6deg);
+    transform: rotate(-8deg);
   }
-  from {
-    transform: rotate(6deg);
+  to {
+    transform: rotate(8deg);
   }
 }
-
 /* adding a breeze, so when the web loads it will send a ripple through all the trees.*/
 
 .tree-breeze {
@@ -414,7 +436,7 @@ nav a {
     transform: rotate(7deg);
   }
   40% {
-    transform: rotate(-60deg);
+    transform: rotate(-6deg);
   }
   60% {
     transform: rotate(4deg);
@@ -424,5 +446,32 @@ nav a {
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+
+footer {
+  position: relative;
+  z-index: 10;
+  margin-top: 24px;
+  color: whitesmoke;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+footer a {
+  color: #ffffff;
+}
+@media (max-width: 560px) {
+  .player-card {
+    margin-top: 36px;
+  }
+
+  .forest {
+    gap: 2px;
+    height: 118px;
+  }
+
+  .tree {
+    max-width: 12%;
   }
 }
