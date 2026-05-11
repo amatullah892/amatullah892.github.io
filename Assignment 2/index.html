@@ -20,7 +20,7 @@
     <nav>
       <ul>
         <li><a href="#">Home</a></li>
-        <li><a href="#">Videos</a></li>
+        <li><a href="#">About</a></li>
         <li><a href="#">Music</a></li>
         <li><a href="#">Playlists</a></li>
       </ul>
@@ -31,14 +31,15 @@
     <main class="player-card">
       <h2>HEALAX</h2>
       <div class="track-info">
-        <div class="track-title" id="tract-title">Chill FM</div>
+        <div class="track-title" id="track-title">Chill FM</div>
         <div class="track-artist" id="track-artist">Dope Cat</div>
       </div>
       <!--I was struggling to get the audio and its buttons to work, with the help of AI I was able to make it work using audio tag which allows me to control audio via javascript, and preload attribute tells browser to only get the audio when the browser is loaded and not the entire audio file, making it easy for processing.-->
-      <audio id="audio-player" preload="metadata"></audio>
+      <audio id="my-audio" preload="metadata"></audio>
 
-      <div class="progress-container" id="progress-container "></div>
-      <div class="progress-bar" id="progress-bar"></div>
+      <div class="progress-container" id="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
       <div class="time-row">
         <span id="time-current">0:00</span>
         <span id="time-total">0:00</span>
@@ -48,10 +49,10 @@
           class="ctrl-btn"
           id="play-pause-button"
           type="button"
-          title="play-or-pause"
+          title="play or pause"
         >
           <img
-            id="play-pause-icon"
+            id="play-pause-img"
             src="https://img.icons8.com/ios-glyphs/30/play--v2.png"
             alt="play"
           />
@@ -60,12 +61,12 @@
           class="ctrl-btn"
           id="mute-unmute-button"
           type="button"
-          title="mute-unmute"
+          title="mute or unmute"
         >
           <img
-            id="mute-unmute-icon"
+            id="mute-unmute-img"
             src="https://img.icons8.com/ios-glyphs/30/high-volume--v2.png"
-            alt="volume-on"
+            alt="volume on"
           />
         </button>
 
@@ -73,15 +74,21 @@
           class="ctrl-btn"
           id="fast-forward-button"
           type="button"
-          title="fast-speed"
+          title="fast forward 10 seconds"
         >
           <img
+            id="fast-forward-button"
             src="https://img.icons8.com/ios-glyphs/30/fast-forward--v2.png"
-            alt="forwards"
+            alt="fast forward"
           />
         </button>
         <div class="likes-btn">
-          <button class="crtl-btn" id="heart-button" type="button" title="like">
+          <button
+            class="ctrl-btn"
+            id="heart-button"
+            type="button"
+            title="like this track"
+          >
             <img
               src="https://img.icons8.com/ios-glyphs/30/like--v1.png"
               alt="like"
@@ -92,9 +99,8 @@
       </div>
       <div class="track-pills">
         <button
-          class="track-pill-active"
-          id
-          track-btn-0
+          class="track-pill track-pill-active"
+          id="track-btn-0"
           type="button"
           data-track="0"
         >
@@ -184,35 +190,6 @@
         <ellipse cx="42" cy="68" rx="28" ry="26" fill="#28a060" />
         <ellipse cx="66" cy="76" rx="22" ry="20" fill="#2d9f65" />
         <ellipse cx="52" cy="58" rx="20" ry="18" fill="#185e3c" />
-      </svg>
-      <svg class="tree" width="70" height="128" viewBox="0 0 78 150">
-        <rect x="32" y="112" width="14" height="38" rx="3" fill="#5c3d1e" />
-        <polygon points="39,8 14,54 64,54" fill="#1f7a4e" />
-        <polygon points="39,30 10,78 68,78" fill="#289960" />
-        <polygon points="39,54 6,105 72,105" fill="#33aa6e" />
-        <polygon points="39,72 4,125 74,125" fill="#3aba7a" />
-      </svg>
-
-      <!-- small round tree with three different colors to add layers and dept.-->
-      <svg class="tree" width="68" height="110652" viewBox="0 0 78 126">
-        <rect x="32" y="90" width="14" height="36" rx="3" fill="#5c3d1e" />
-        <ellipse cx="39" cy="60" rx="34" ry="38" fill="#1a6b44" />
-        <ellipse cx="39" cy="52" rx="28" ry="30" fill="#228855" />
-        <ellipse cx="39" cy="40" rx="18" ry="16" fill="#2faa6e" />
-      </svg>
-      <div class="forest" id="forest"></div>
-      <!-- Small round tree with three different colors to add layers and depth.-->
-      <svg class="tree" width="65" height="100" viewBox="0 0 80 120">
-        <rect x="34" y="85" width="12" height="35" rx="3" fill="#5c3d1e" />
-        <ellipse cx="40" cy="55" rx="34" rv="38" fill="#1a6b44" />
-        <ellipse cx="40" cy="47" rx="28" rv="30" fill="#228855" />
-        <ellipse cx="40" cy="36" rx="18" rv="16" fill="#1a6b44" />
-      </svg>
-      <svg class="tree" width="46" height="152" viewBox="0 0 56 176">
-        <rect x="23" y="140" width="10" height="36" rx="2" fill="#5c3d1e" />
-        <ellipse cx="28" cy="66" rx="20" ry="78" fill="#1a6b44" />
-        <ellipse cx="28" cy="59" rx="15" ry="68" fill="#228855" />
-        <ellipse cx="28" cy="51" rx="10" ry="56" fill="#2faa6e" />
       </svg>
     </div>
     <!-- Footer Section -->

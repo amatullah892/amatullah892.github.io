@@ -318,12 +318,6 @@ nav a {
   transform: 0.15s ease;
 }
 
-.track-pill-hover {
-  background: rgba(100, 160, 255, 0.2);
-  transform: scale(1.06);
-  box-shadow: 0 0 12px rgba(100, 160, 255, 0.35);
-}
-
 /* current playing track gets a blue glow, so it is obvious to the user which track is playing.*/
 .track-pill-active {
   background: rgba(58, 127, 213, 0.45);
@@ -399,10 +393,10 @@ nav a {
 
 @keyframes idleWind {
   from {
-    transform: rotate(-0.6deg);
+    transform: rotate(-5deg);
   }
   to {
-    transform: rotate(0.6deg);
+    transform: rotate(5deg);
   }
 }
 
@@ -411,7 +405,7 @@ nav a {
 .tree:hover {
   animation: hoverSway 0.9s ease-in-out infinite alternate;
   /* slightly brighter on hover, so it is obvious it reacted.*/
-  filter: brightness(0.7);
+  filter: brightness(0.5);
 }
 
 @keyframes hoverSway {
