@@ -180,6 +180,10 @@ nav a {
   letter-spacing: 0.12rem;
 }
 
+h2 {
+  color: #ffffff;
+  font-weight: 400;
+}
 /* adding track info, of each track playing*/
 .track-info {
   text-align: center;

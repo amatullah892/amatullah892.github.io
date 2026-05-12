@@ -1,3 +1,16 @@
+/*
+Music from #Uppbeat (free for Creators!):
+https://uppbeat.io/t/walz/golden-age
+License code: PRNSORU5UAVJN9VU
+
+Music from #Uppbeat (free for Creators!):
+https://uppbeat.io/t/dope-cat/chill-fm
+License code: SNHUM8DHVQE3XFES
+
+Music from #Uppbeat (free for Creators!):
+https://uppbeat.io/t/pryces/all-of-my
+License code: CAY6SMNDY1IKQLHA*/
+
 const audioList = [
   {
     id: 1,
