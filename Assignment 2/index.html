@@ -13,10 +13,16 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <!--I have named the relaxing study music player as Healax, it is the abbreviation for heal and relax combined, the exact kind of purpose the player is made to serve, providing calming music with a soothing background with smooth animations made using CSS, which allows the user to stay focused on their work.-->
     <title>HEALAX</title>
   </head>
   <body>
+    <header>
+      <h1>Media Player Website</h1>
+    </header>
+    <!--bringing in the glass effect for the background from CSS.-->
     <div class="glass-effect"></div>
+    <!--creating a navigation bar as per the website we were asked to revamp.-->
     <nav>
       <ul>
         <li><a href="#">Home</a></li>
@@ -25,9 +31,12 @@
         <li><a href="#">Playlists</a></li>
       </ul>
     </nav>
+    <!--bringing in the moon and stars from CSS, a bit before the media player section as they are a part of the bacground, and lie below the media player.-->
     <div class="moon"></div>
     <div class="stars-container" id="stars-container"></div>
+    <!--main content section, bring in all the elements that were made in CSS into the web-->
 
+    <!--adding the player card which is the main media player into the web along with the track title, info and artists, as well as the brand name "Healax"-->
     <main class="player-card">
       <h2>HEALAX</h2>
       <div class="track-info">
@@ -36,14 +45,16 @@
       </div>
       <!--I was struggling to get the audio and its buttons to work, with the help of AI I was able to make it work using audio tag which allows me to control audio via javascript, and preload attribute tells browser to only get the audio when the browser is loaded and not the entire audio file, making it easy for processing.-->
       <audio id="my-audio" preload="metadata"></audio>
-
+      <!--addng in the progress container and bar as it comes after the track info.-->
       <div class="progress-container" id="progress-container">
         <div class="progress-bar" id="progress-bar"></div>
       </div>
+      <!--bringing in the time row which contains the current time and total time of the audio playing, which will sit below the player-->
       <div class="time-row">
         <span id="time-current">0:00</span>
         <span id="time-total">0:00</span>
       </div>
+      <!--adding images and buttons(from CSS) required for media player, including play, pause, fast forward, mute,unmute and like buttons-->
       <div class="controls">
         <button
           class="ctrl-btn"
@@ -97,6 +108,7 @@
           <span id="likes">0</span>
         </div>
       </div>
+      <!--track pills are the buttons that will show names of the other track, when the user clicks on them it will change the track info and play that audio, providing the user with a choice to go with 3 different tracks-->
       <div class="track-pills">
         <button
           class="track-pill track-pill-active"
@@ -124,18 +136,18 @@
         </button>
       </div>
     </main>
-
+    <!-- with the help of AI I was able to get the dimensions of the trees right, this is the additional content-->
     <div class="forest" id="forest">
       <!-- Small round tree with three different colors to add layers and depth.-->
       <svg class="tree" width="65" height="100" viewBox="0 0 80 120">
-        <rect x="34" y="85" width="12" height="35" rx="3" fill="#5c3d1e" />
+        <rect x="34" y="85" width="12" height="50" rx="3" fill="#5c3d1e" />
         <ellipse cx="40" cy="55" rx="34" rv="38" fill="#1a6b44" />
         <ellipse cx="40" cy="47" rx="28" rv="30" fill="#228855" />
         <ellipse cx="40" cy="36" rx="18" rv="16" fill="#1a6b44" />
       </svg>
       <!-- Tall pine tree with three different colors to add layers and depth.-->
       <svg class="tree" width="60" height="145" viewBox="0 0 70 165">
-        <rect x="29" y="125" width="12" height="40" rx="3" fill="#5c3d1e" />
+        <rect x="29" y="125" width="12" height="50" rx="3" fill="#5c3d1e" />
         <polygon points="35,5 10,52 60,52" fill="#1a6b44" />
         <polygon points="35,28 7,76 63,76" fill="#228855" />
         <polygon points="35,52 4,100 66,100" fill="#2faa6e" />
@@ -143,7 +155,7 @@
       </svg>
       <!-- Narrow pointy tree with three different colors to add layers and depth.-->
       <svg class="tree" width="44" height="148" viewBox="0 0 54 172">
-        <rect x="22" y="138" width="10" height="34" rx="2" fill="#5c3d1e" />
+        <rect x="22" y="138" width="10" height="50" rx="2" fill="#5c3d1e" />
         <ellipse cx="27" cy="64" rx="18" ry="78" fill="#1a6b44" />
         <ellipse cx="27" cy="57" rx="13" ry="68" fill="#228855" />
         <ellipse cx="27" cy="50" rx="9" ry="56" fill="#2faa6e" />
@@ -159,7 +171,7 @@
       </svg>
       <!-- tallest center tree with three different colors to add layers and depth.-->
       <svg class="tree" width="105" height="178" viewBox="0 0 115 202">
-        <rect x="48" y="154" width="19" height="48" rx="4" fill="#3d2610" />
+        <rect x="48" y="154" width="19" height="50" rx="4" fill="#3d2610" />
         <ellipse cx="57" cy="106" rx="54" ry="58" fill="#165838" />
         <ellipse cx="57" cy="97" rx="48" ry="50" fill="#1e8048" />
         <ellipse cx="46" cy="81" rx="30" ry="28" fill="#26985c" />
@@ -169,7 +181,7 @@
       </svg>
       <!-- medium pine tree with three different colors to add layers and depth.-->
       <svg class="tree" width="70" height="128" viewBox="0 0 78 150">
-        <rect x="32" y="112" width="14" height="38" rx="3" fill="#5c3d1e" />
+        <rect x="32" y="112" width="14" height="50" rx="3" fill="#5c3d1e" />
         <polygon points="39,8 14,54 64,54" fill="#1f7a4e" />
         <polygon points="39,30 10,78 68,78" fill="#289960" />
         <polygon points="39,54 6,105 72,105" fill="#33aa6e" />
@@ -177,7 +189,7 @@
       </svg>
       <!-- slim pointy tree with three different colors to add layers and dept.-->
       <svg class="tree" width="46" height="152" viewBox="0 0 56 176">
-        <rect x="23" y="140" width="10" height="36" rx="2" fill="#5c3d1e" />
+        <rect x="23" y="140" width="10" height="50" rx="2" fill="#5c3d1e" />
         <ellipse cx="28" cy="66" rx="20" ry="78" fill="#1a6b44" />
         <ellipse cx="28" cy="59" rx="15" ry="68" fill="#228855" />
         <ellipse cx="28" cy="51" rx="10" ry="56" fill="#2faa6e" />
@@ -195,7 +207,7 @@
     <!-- Footer Section -->
     <footer class="site-footer">
       <div class="footer-inner"></div>
-
+      <!--I used span for the footer, to add specific text and copyright and refrences without breaking the flow of content, as it is non-semantic it is good for applying small changes in CSS.-->
       ><span class="footer-copy"
         >&copy; 2026 HEALAX. All rights reserved.
       </span>
@@ -203,6 +215,10 @@
       <a href="https://uppbeat.io/">uppbeat</a>
       <span>and Icon by</span>
       <a href="https://icons8.com">Icons8</a>
+      <span
+        >License code: PRNSORU5UAVJN9VU, License code: SNHUM8DHVQE3XFES, License
+        code: CAY6SMNDY1IKQLHA</span
+      >
     </footer>
   </body>
 </html>
