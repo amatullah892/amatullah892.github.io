@@ -67,6 +67,8 @@ console.log(playPauseButton);
 
 const playPauseImg = document.querySelector("#play-pause-img");
 console.log(playPauseImg);
+
+playPauseButton.addEventListener("click", togglePlayback);
 /*If the music is stopped, it will play it when user click play and if the music is playing then it will pause it when user clicks pause*/
 function togglePlayback() {
   if (myAudio.paused || myAudio.ended) {
