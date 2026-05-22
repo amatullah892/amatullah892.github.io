@@ -1,0 +1,141 @@
+/* https://colorhunt.co/palette/1a120b3c2a21d5cea3e5e5cb */
+
+body {
+  background-color: #1a120b;
+  display: flex;
+  text-align: center;
+  margin: auto;
+  max-width: 1000px;
+  justify-content: center;
+  align-items: center;
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: #e5e5cb;
+  /* color: #3c2a21; */
+  font-size: 1.1rem;
+  gap: 1.5rem;
+  overflow: hidden;
+}
+
+.outer {
+  border: 2px dashed #e5e5cb7a;
+  width: 400px;
+  min-height: 200px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  opacity: 1;
+  /* background-color: cornsilk; */
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    background-color 0.5s ease;
+}
+
+button {
+  padding: 20px 30px;
+  font-size: 1.4rem;
+  border-radius: 16px;
+  background-color: peru;
+  border-style: none;
+  color: antiquewhite;
+  transition:
+    background-color 0.8s ease,
+    scale 0.8s ease;
+}
+
+button:hover {
+  background-color: rgb(187, 142, 97);
+  scale: 1.2;
+}
+#duck-icon {
+  transition: fill 0.8s ease;
+  cursor: pointer;
+}
+#duck {
+  transition:
+    translate 0.8s ease,
+    scale 0.8s ease,
+    rotate 0.8s ease,
+    bounce 1.2s linear infinite;
+  cursor: pointer;
+}
+#duck-icon:hover {
+  fill: rgb(216, 216, 109);
+}
+
+#duck:hover {
+  scale: 0.8;
+  rotate: 30deg;
+}
+
+#box {
+  width: 160px;
+  height: 160px;
+  background-color: aquamarine;
+  color: #1a120b;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes sale {
+  0% {
+    background-color: aquamarine;
+  }
+  30% {
+    background-color: aqua;
+  }
+  50% {
+    background-color: azure;
+  }
+  80% {
+    background-color: beige;
+  }
+  100% {
+    background-color: bisque;
+  }
+}
+
+#loader {
+  width: 100px;
+  height: 100px;
+  border: 3px solid pink;
+  border-radius: 50%;
+  border-bottom-color: rgb(104, 104, 172);
+  animation-name: spinning;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes spinning {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  70%,
+  100% {
+    translate: 0px 0px;
+  }
+  40% {
+    translate: 0px -30px;
+  }
+  60% {
+    translate: 0px -50px;
+  }
+}
