@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maze Glider</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="screen screen--welcome is-active" id="welcomeScreen">
+        <h1 id="welcomeTitle">Maze Glider</h1>
+        <p>
+          Navigate through the maze from the start to end point using hover.
+        </p>
+        <p>DO NOT TOUCH THE WHITE WALLS OR THERE WILL BE CONSEQUENCES</p>
+        <button class="primary-button" id="startbutton" type="button">
+          Start
+        </button>
+      </section>
+      <section class="screen screen--game" id="gameScreen">
+        <div class="game-header">
+          <div>
+            <p class="eyebrow">Maze Glider</p>
+            <h1 id="mazeTitle">Something is Lurking</h1>
+          </div>
+          <button class="ghost-button" id="restartButton" type="button">
+            Restart
+          </button>
+        </div>
+
+        <div class="maze-wrap">
+          <div class="maze-board" id="mazeBoard">
+            <div class="start-zone" id="startZone">
+              <img src="cat.png" alt="cat start" />
+            </div>
+            <div class="end-zone" id="endZone">
+              <img src="food.png" alt="food end" />
+            </div>
+            <div class="player" id="player"></div>
+            <div class="trail-layer" id="trailLayer"></div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article>
+            <span>Attempts</span>
+            <strong id="attemptsBox">0</strong>
+          </article>
+          <article>
+            <span>Tier</span>
+            <strong id="tierBox">Untested</strong>
+          </article>
+          <article>
+            <span>Best Record</span>
+            <strong id="bestBox">Not finished yet</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="screen-screen-success" id="successScreen">
+        <img class="calm-img" src="end.png" alt="landscape" />
+        <p class="eyebrow">Finished</p>
+        <h1 class="successTitle">Congratulations</h1>
+        <p id="finishSummary">You Survived Through The Maze</p>
+        <button class="primary-button" id="playAgainButton" type="button">
+          Play Again
+        </button>
+      </section>
+    </main>
+    <div class="scare-overlay" id="scareOverlay">
+      <img class="scare-image-active" src="1.jpg" alt="scary image" />
+      <img class="scare-image" src="2.jpg" alt="scary image" />
+      <img class="scare-image" src="3.png" alt="scary image" />
+    </div>
+    <audio id="screamAudio" src="scream.mp3" preload="auto"></audio>
+    <audio id="calmAudio" src="calm.mp3" preload="auto" loop></audio>
+  </body>
+</html>
