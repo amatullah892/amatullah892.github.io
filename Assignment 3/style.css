@@ -61,9 +61,10 @@ button {
 }
 
 .screen--welcome {
-  max-width: 560px;
+  max-width: 660px;
   margin: auto;
-  padding: clamp(28px, 6vw, 52px);
+  padding: clamp(38px, 7vw, 62px);
+  height: max-content;
   text-align: center;
   color: var(--lime);
   border-radius: 8px;

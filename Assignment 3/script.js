@@ -44,7 +44,7 @@ function showSuccessScreen() {
   }
 
   if (successScreen) {
-    successScreen.classList.remove("is-active");
+    successScreen.classList.add("is-active");
   }
 }
 
@@ -79,7 +79,7 @@ if (playAgainButton) {
 function startMaze() {
   stopCalmSound();
   attempts = 1;
-  startedAt = Data.now();
+  startedAt = Date.now();
   updateStats();
   showGameScreen();
   requestAnimationFrame(resetPlayerToStart);
@@ -91,7 +91,7 @@ console.log(mazeBoard);
 
 if (mazeBoard) {
   mazeBoard.addEventListener("pointermover", movePlayer);
-  mazeBoard.addEventListener("pointerLeave", hidePlayer);
+  mazeBoard.addEventListener("pointerleave", hidePlayer);
 }
 
 //moves the red glowing cursor whenever the user moves their mouse in the maze.
@@ -227,17 +227,20 @@ console.log(scareImages);
 
 function showNextScareImage() {
   scareImages.forEach(hideScareImage);
-  scareImages[scareIndex].classList.add("in-active");
+
+  function hideScareImage(image) {
+    image.classList.remove("is-active");
+  }
+  if (scareImages.length === 0) {
+    return;
+  }
+
   scareIndex++;
 
   if (scareIndex >= scareImages.length) {
     scareIndex = 0;
   }
-}
-
-// hides one scary image
-function hideScareImage(image) {
-  image.classList.remove("is-active");
+  scareImages[scareIndex].classList.add("is-active");
 }
 
 //The loud horror sound
@@ -333,7 +336,7 @@ function finishMaze() {
     return;
   }
 
-  const finishTime = Data.now() - startedAt;
+  const finishTime = Date.now() - startedAt;
   const finalTier = getTier(attempts, finishTime);
   const bestRecord = getBestRecord();
 
@@ -407,247 +410,245 @@ function handleWallHit() {
 
 // resets the player after touching a wall.
 function resetAfterWallHit(delay) {
-    window.setTimeout(resetNow,delay);
+  window.setTimeout(resetNow, delay);
 
-    function resetNow() {
-        resetPlayerToStart();
-        isScaring = false:
-    }
+  function resetNow() {
+    resetPlayerToStart();
+    isScaring = false;
+  }
 }
 
 // chooses a random number of wall hits beofre the scary image appears.
 
 function getNextScareDelay() {
-    return Math.floor(Math.random() * 4) + 2;
-
+  return Math.floor(Math.random() * 4) + 2;
 }
 
 // gets the best record from local storage
 function getBestRecord() {
-    const savedRecord = localStorage.getItem(bestRecordKey);
+  const savedRecord = localStorage.getItem(bestRecordKey);
 
-    if (!savedRecord) {
-        return null;
-    }
+  if (!savedRecord) {
+    return null;
+  }
 
-    return JSON.parse(savedRecord);
+  return JSON.parse(savedRecord);
 }
 
 //saves the best record to local storage
 function saveBestRecord(time, attemptCount) {
-    const record = {
-        time: time,
-        attempts: attemptCount,
-    };
+  const record = {
+    time: time,
+    attempts: attemptCount,
+  };
 
-    localStorage.setItem(bestRecordKey, JSON.stringify(record));
+  localStorage.setItem(bestRecordKey, JSON.stringify(record));
 }
 
 //changes milliseconds into seconds text.
 
 function formatTime(milliseconds) {
-    const seconds = milliseconds / 1000;
-    return seconds.toFixed(1) + "s"
+  const seconds = milliseconds / 1000;
+  return seconds.toFixed(1) + "s";
 }
 
 // chooses the player's tier based on attempts and time.
-function getTier (attemptCount, milliseconds) {
-    const seconds = milliseconds / 1000;
+function getTier(attemptCount, milliseconds) {
+  const seconds = milliseconds / 1000;
 
-    if(attemptCount <= 1 && seconds <= 35) {
-        return "S Tier";
-    }
+  if (attemptCount <= 1 && seconds <= 35) {
+    return "S Tier";
+  }
 
-    if (attemptCount <= 3 && seconds <=55){
-        return "A Tier";
-    }
+  if (attemptCount <= 3 && seconds <= 55) {
+    return "A Tier";
+  }
 
-    if (attemptCount <= 6) {
-        return " B Tier";
-    }
+  if (attemptCount <= 6) {
+    return " B Tier";
+  }
 
-    return "Brave";
+  return "Brave";
 }
 
 // checks if two rectangles are overlapping
 
 function rectanglesOverlap(firstRectangle, secondRectangle) {
-    return(
-        firstRectangle.left < secondRectangle.right &&
-        firstRectangle.right < secondRectangle.left &&
-        firstRectangle.top < secondRectangle.bottom &&
-        firstRectangle.bottom < secondRectangle.top 
-    );
+  return (
+    firstRectangle.left < secondRectangle.right &&
+    firstRectangle.right < secondRectangle.left &&
+    firstRectangle.top < secondRectangle.bottom &&
+    firstRectangle.bottom < secondRectangle.top
+  );
 }
 
 //finds the centre of a maze cell
-function getCellCenter (cell) {
-    if (!mazeBoard) {
-        return{
-            x: 0,
-            y: 0,
-        };
-    }
-
-    const boardRect = mazeBoard.getBoundingClientRect();
-
-    return{
-        x: ((cell.column + 0.5) * boardRect,width) / mazeColumns,
-        y: ((cell.row + 0.5) * boardRect.height) / mazeRows,
+function getCellCenter(cell) {
+  if (!mazeBoard) {
+    return {
+      x: 0,
+      y: 0,
     };
+  }
+
+  const boardRect = mazeBoard.getBoundingClientRect();
+
+  return {
+    x: ((cell.column + 0.5) * boardRect, width) / mazeColumns,
+    y: ((cell.row + 0.5) * boardRect.height) / mazeRows,
+  };
 }
 
 // the function below create the maze wall patterns
 //builds the maze on scree
 
 function buildMaze() {
-    if (!mazeBoard) {
-        return;
+  if (!mazeBoard) {
+    return;
+  }
+
+  const mazeGrid = makeMazeGrid();
+  const wallWidth = 100 / mazeColumns;
+  const wallHeigth = 100 / mazeRows;
+
+  mazeBoard.querySelectorAll(".wall").forEach(removeWall);
+
+  for (let row = 0; row < mazeRows; row++) {
+    for (let column = 0; column < mazeColumns; column++) {
+      if (mazeGrid[row][column] === 1) {
+        addWall(column, row, wallWidth, wallHeigth);
+      }
     }
-
-    const mazeGrid = makeMazeGrid();
-    const wallWidth = 100 / mazeColumns;
-    const wallHeigth = 100 / mazeRows;
-
-    mazeBoard.querySelectorAll(".wall").forEach(removeWall);
-
-    for (let row = 0; row < mazeRows; row ++) {
-        for ( let column = 0; column < mazeColumns; column++) {
-            if (mazeGrid[row][column] === 1) {
-                addWall (column, row, wallWidth, wallHeigth);
-            }
-        }
-    }
+  }
 }
 
 // remove an old wall
 function removeWall(wall) {
-    wall.remove();
+  wall.remove();
 }
 
 // adds one wall sqaure to the maze
-function addWall (column, row, wallWidth, wallHeight) {
-    const wall = document.createElement("div");
+function addWall(column, row, wallWidth, wallHeight) {
+  const wall = document.createElement("div");
 
-    wall.className = "wall";
-    wall.style.left = column * wallWidth + "%";
-    wall.style.top = row * wallHeight + "%";
-    wall.style.width = wallWidth + "%";
-    wall.style.left = wallHeight + "%";
-    mazeBoard.prepend(wall);
+  wall.className = "wall";
+  wall.style.left = column * wallWidth + "%";
+  wall.style.top = row * wallHeight + "%";
+  wall.style.width = wallWidth + "%";
+  wall.style.height = wallHeight + "%";
+  mazeBoard.prepend(wall);
 }
 
 // creates a maze grid using 1 for walls and 0 for paths
 
 function makeMazeGrid() {
-    const randomNumber = seededRandom(52);
-    const grid = makeWallGrid();
-    const stack = [startCell];
+  const randomNumber = seededRandom(52);
+  const grid = makeWallGrid();
+  const stack = [startCell];
 
-    grid [startCell.row][startCell.column] = 0;
+  grid[startCell.row][startCell.column] = 0;
 
-    while (stack.length > 0) {
-        const currentCell = stack[stack.length - 1];
-        const nextCell = getNextCell(currentCell, grid, randomNumber);
+  while (stack.length > 0) {
+    const currentCell = stack[stack.length - 1];
+    const nextCell = getNextCell(currentCell, grid, randomNumber);
 
-        if (!nextCell) {
-            stack.pop();
-        } else {
-            grid[nextCell.wallRow][nextCell.wallColumn] = 0;
-            grid[nextCell.row][nextCell.column] = 0;
-            stack.push({
-                column: nextCell.column,
-                row: nextCell,
-            });
-        }
+    if (!nextCell) {
+      stack.pop();
+    } else {
+      grid[nextCell.wallRow][nextCell.wallColumn] = 0;
+      grid[nextCell.row][nextCell.column] = 0;
+      stack.push({
+        column: nextCell.column,
+        row: nextCell.row,
+      });
     }
+  }
 
-    return grid;
+  return grid;
 }
 
 //starts with a grid that is all walls.
 function makeWallGrid() {
-    const grid = [];
+  const grid = [];
 
-    for (let row = 0 < mazeRows; row++) {
-        const rowCells = [];
-    
-    for (let column = 0; column< mazeColumns; column++) {
-        rowCells.push(1);
+  for (let row = 0; row < mazeRows; row++) {
+    const rowCells = [];
 
+    for (let column = 0; column < mazeColumns; column++) {
+      rowCells.push(1);
     }
 
     grid.push(rowCells);
-    }
-    return grid;
+  }
+  return grid;
 }
 
 // finds the next path cell while building the maze
 
-function getNextCell (currentCell, grid, randomNumber) {
-    const directions = shuffleWithSeed(
-        [
-            { column: 2, row: 0 },
-             { column: -2, row: 0 },
-              { column: 0, row: -2 },
-               { column: 0, row: -2 },
-        ],
-        randomNumber
-    );
+function getNextCell(currentCell, grid, randomNumber) {
+  const directions = shuffleWithSeed(
+    [
+      { column: 2, row: 0 },
+      { column: -2, row: 0 },
+      { column: 0, row: 2 },
+      { column: 0, row: -2 },
+    ],
+    randomNumber,
+  );
 
-    for (let index = 0; index < directions.length; index++) {
-        const direction = directions[index];
-        const nextColumn = currentCell.column + direction.column;
-        const nextRow = currentCell.row + direction.row;
+  for (let index = 0; index < directions.length; index++) {
+    const direction = directions[index];
+    const nextColumn = currentCell.column + direction.column;
+    const nextRow = currentCell.row + direction.row;
 
-        if (cellCanBeUsed(nextColumn, nextRow, grid)) {
-            return {
-                column: nextColumn,
-                row: nextRow,
-                wallColumn: currentCell.column + direction.column / 2,
-                wallRow: currentCell.row + direction.row / 2,
-            };
-        }
+    if (cellCanBeUsed(nextColumn, nextRow, grid)) {
+      return {
+        column: nextColumn,
+        row: nextRow,
+        wallColumn: currentCell.column + direction.column / 2,
+        wallRow: currentCell.row + direction.row / 2,
+      };
     }
-    return null;
+  }
+  return null;
 }
 
 // checks if a cell can become a path
 function cellCanBeUsed(column, row, grid) {
-    return (
-        column > 0 &&
-        column < mazeColumns - 1 &&
-        row > 0 &&
-        row < mazeRows - 1 &&
-        grid[row][column] === 1
-    );
+  return (
+    column > 0 &&
+    column < mazeColumns - 1 &&
+    row > 0 &&
+    row < mazeRows - 1 &&
+    grid[row][column] === 1
+  );
 }
 
 // this makes the maze random but still the same everytime the page loads.
 
 function seededRandom(seed) {
-    let value = seed;
+  let value = seed;
 
-    function getRandomNumber() {
-        value = (value * 1664525 + 1013904223) % 4294967296;
-        return value / 4294967296;
-    }
+  function getRandomNumber() {
+    value = (value * 1664525 + 1013904223) % 4294967296;
+    return value / 4294967296;
+  }
 
-    return getRandomNumber;
+  return getRandomNumber;
 }
 
 //shuffles the directions when is being created.
 
-function shuffleWithSeed (items, randomNumber) {
-    const shuffledItems = items.slice();
+function shuffleWithSeed(items, randomNumber) {
+  const shuffledItems = items.slice();
 
-    for (let index = shuffledItems.length - 1; index > 0; index-- ) {
-        const swapIndex = Math.floor(randomNumber() * (index + 1));
-        const firstItems = shuffledItems[index];
+  for (let index = shuffledItems.length - 1; index > 0; index--) {
+    const swapIndex = Math.floor(randomNumber() * (index + 1));
+    const firstItems = shuffledItems[index];
 
-        shuffledItems[index] = shuffledItems[swapIndex];
-        shuffledItems[swapIndex] = firstItems;
-    }
+    shuffledItems[index] = shuffledItems[swapIndex];
+    shuffledItems[swapIndex] = firstItems;
+  }
 
-    return shuffledItems;
+  return shuffledItems;
 }
