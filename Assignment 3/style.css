@@ -8,6 +8,8 @@
   --lime: #b7ff68;
   --coral: #ff7867;
   --gold: #ffd166;
+  --screen-pad: clamp(10px, 2.2vmin, 24px);
+  --game-gap: clamp(8px, 1.6vmin, 14px);
 }
 
 * {
@@ -16,11 +18,13 @@
 
 html,
 body {
-  min-height: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 body {
   margin: 0;
+  overflow: hidden;
   color: var(--ink);
   font-family: Arial, Helvetica, sans-serif;
   background: #050705;
@@ -32,18 +36,25 @@ button {
   cursor: pointer;
 }
 
+img {
+  display: block;
+  max-width: 100%;
+}
+
 .app-shell {
-  width: min(1120px, calc(100vw - 32px));
-  min-height: 100vh;
+  width: min(1120px, calc(100vw - (var(--screen-pad) * 2)));
+  height: 100dvh;
+  min-height: 0;
   margin: 0 auto;
   display: grid;
   place-items: center;
-  padding: 28px 0;
+  padding: var(--screen-pad) 0;
 }
 
 .screen {
   display: none;
   width: 100%;
+  min-height: 0;
 }
 
 .screen.is-active {
@@ -52,19 +63,62 @@ button {
 
 .screen--success {
   max-width: 720px;
+  max-height: calc(100dvh - (var(--screen-pad) * 2));
   margin: auto;
-  padding: clamp(28px, 6vw, 56px);
+  overflow: auto;
+  padding: clamp(22px, 5vmin, 46px);
   text-align: center;
   background: var(--panel);
   border-radius: 8px;
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.38);
 }
 
+.screen--success .eyebrow,
+.screen--success p,
+.screen--success h1 {
+  text-align: center;
+}
+
+.screen--success.in-active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screen--success .eyebrow {
+  display: block;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.successTitle {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: clamp(3rem, 8vmin, 5.4rem);
+  text-align: center;
+}
+
+#finishSummary {
+  max-width: 32ch;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.screen--success .primary-button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .screen--welcome {
   max-width: 660px;
+  max-height: calc(100dvh - (var(--screen-pad) * 2));
   margin: auto;
-  padding: clamp(38px, 7vw, 62px);
-  height: max-content;
+  overflow: auto;
+  width: min(900px, calc(100vw - 32px));
+  padding: clamp(40px, 8vmin, 80px);
   text-align: center;
   color: var(--lime);
   border-radius: 8px;
@@ -82,7 +136,7 @@ button {
 }
 
 .screen--welcome p {
-  max-width: 34ch;
+  max-width: 75ch;
   color: #d9ffc4;
   font-weight: 700;
 }
@@ -137,8 +191,8 @@ button {
 
 .eyebrow {
   margin: 0 0 6px;
-  color: #4f6270;
-  font-size: 0.78rem;
+  color: #9740fb;
+  font-size: clamp(0.68rem, 1.5vmin, 0.78rem);
   font-weight: 700;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -154,13 +208,13 @@ p {
   margin: 0 auto 14px;
   max-width: 38ch;
   color: #42464e;
-  font-size: 1.02rem;
-  line-height: 1.55;
+  font-size: clamp(0.9rem, 2vmin, 1.02rem);
+  line-height: 1.45;
 }
 
 .primary-button,
 .ghost-button {
-  min-height: 44px;
+  min-height: 42px;
   padding: 0 22px;
   border-radius: 8px;
   font-weight: 800;
@@ -179,7 +233,15 @@ p {
   border: 1px solid rgba(255, 255, 255, 0.28);
 }
 
+.screen--game.is-active {
+  height: calc(100dvh - (var(--screen-pad) * 2));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--game-gap);
+}
+
 .game-header {
+  min-height: 0;
   display: flex;
   align-items: end;
   justify-content: space-between;
@@ -189,12 +251,16 @@ p {
 
 .game-header h1 {
   margin-bottom: 0;
+  font-size: clamp(1.45rem, 4vmin, 3rem);
 }
 
 .maze-wrap {
-  padding: clamp(8px, 1.4vw, 14px);
+  min-height: 0;
+  padding: clamp(6px, 1.2vw, 12px);
+  display: grid;
+  place-items: center;
   background: #050705;
-  border: 4px solid var(--lime);
+  border: clamp(2px, 0.7vmin, 4px) solid var(--lime);
   border-radius: 8px;
   box-shadow:
     0 0 26px rgba(183, 255, 104, 0.18),
@@ -203,7 +269,9 @@ p {
 
 .maze-board {
   position: relative;
+  width: min(100%, calc((100dvh - 174px) * 16 / 9));
   aspect-ratio: 16/9;
+  max-height: 100%;
   width: 100%;
   overflow: hidden;
   cursor: none;
@@ -220,11 +288,12 @@ p {
 
 .start-zone,
 .end-zone {
+  transform: translate(-50%, -50%);
   position: absolute;
   z-index: 2;
   display: grid;
   place-items: center;
-  width: 5%;
+  width: max(18px, 5%);
   aspect-ratio: 1;
   padding: 3px;
   border-radius: 50%;
@@ -233,30 +302,31 @@ p {
 }
 
 .start-zone {
-  left: 2.34%;
-  top: 5.39%;
+  left: 4.84%;
+  top: 7.89%;
   background: #1eb83b;
   box-shadow: 0 0 16px rgba(30, 184, 59, 0.78);
 }
 
 .end-zone {
-  left: 92.66%;
-  top: 89.61%;
+  left: 95.16%;
+  top: 92.11%;
   background: #6d25b8;
   box-shadow: 0 0 16px rgba(109, 37, 184, 0.78);
 }
 
 .start-zone img,
-.end-aone img {
+.end-zone img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
 .player {
   position: absolute;
   z-index: 5;
-  width: 14px;
-  height: 14px;
+  width: clamp(14px, 2.2vmin, 20px);
+  height: clamp(14px, 2.2vmin, 20px);
   pointer-events: none;
   border-radius: 50%;
   background: radial-gradient(
@@ -281,8 +351,8 @@ p {
 
 .trail-dot {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: clamp(8px, 1.5vmin, 12px);
+  height: clamp(8px, 1.5vmin, 12px);
   border-radius: 50%;
   background: rgba(255, 22, 14, 0.54);
   box-shadow: 0 0 15px rgba(255, 22, 14, 0.88);
@@ -298,32 +368,32 @@ p {
 }
 
 .stats-grid {
+  min-height: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 14px;
+  gap: clamp(8px, 1.4vmin, 12px);
 }
 
 .stats-grid article {
-  min-height: 86px;
-  padding: 16px;
+  min-height: 0;
+  padding: clamp(8px, 1.8vmin, 14px);
   border-radius: 8px;
   background: #f7f1df;
-  border: 3px solid #ffffff;
+  border: clamp(2px, 0.5vmin, 3px) solid #ffffff;
 }
 
 .stats-grid span {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: clamp(0.65rem, 1.5vmin, 0.8rem);
   font-weight: 700;
   text-transform: uppercase;
 }
 
 .stats-grid strong {
   display: block;
-  font-size: clamp(1.15rem, 3vw, 1.75rem);
+  font-size: clamp(0.95rem, 2.4vw, 1.45rem);
   line-height: 1.1;
 }
 
@@ -332,7 +402,7 @@ p {
   inset: 0;
   z-index: 20;
   display: none;
-  place-items: center;
+  place-items: stretch;
   background: #050505;
 }
 
@@ -358,22 +428,24 @@ p {
 
 .scare-image {
   display: none;
-  width: min(720px, 92vw);
-  max-height: 92vh;
-  object-fit: contain;
+  width: 100vw;
+  height: 100dvh;
+  object-fit: cover;
+  object-position: center 62%;
   filter: contrast(1.18) saturate(1.05);
-  animation: scareZoom 0.8s ease-out;
+  animation: scarePulse 0.75s infinite alternate ease-in-out;
+  transform: scale(1.16);
 }
 
-@keyframes scareZoom {
-  0% {
-    transform: scale(0.78);
-  }
-  35% {
+@keyframes scarePulse {
+  from {
     transform: scale(1.08);
+    filter: contrast(1.05) saturate(1);
   }
-  100% {
-    transform: scale(1);
+
+  to {
+    transform: scale(1.2);
+    filter: contrast(1.35) saturate(1.2);
   }
 }
 
@@ -383,27 +455,56 @@ p {
 
 .calm-img {
   display: block;
-  width: min(520px, 100%);
+  width: min(620px, 100%);
+  max-height: 40dvh;
   margin: 0 auto 24px;
   border-radius: 8px;
   border: 4px solid white;
+  object-fit: cover;
 }
 
 @media (max-width: 760px) {
+  body {
+    overflow: auto;
+  }
+  .app-shell {
+    min-height: 100dvh;
+    height: auto;
+  }
+  .screen--game.is-active {
+    min-height: calc(100dvh - (var(--screen-pad) * 2));
+    height: auto;
+    grid-template-rows: auto auto auto;
+  }
   .game-header {
     align-items: start;
   }
 
   .maze-board {
+    width: 100%;
+    max-height: none;
     aspect-ratio: 10/13;
   }
 
   .stats-grid {
     grid-template-columns: 1fr;
   }
+}
 
-  .player {
-    width: 12px;
-    height: 12px;
+@media (max-height: 620px) and (min-width: 761px) {
+  .game-header h1 {
+    font-size: clamp(1.2rem, 3.2vmin, 2.2rem);
+  }
+  .stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stats-grid article {
+    padding: 8px, 10px;
+  }
+
+  .maze-board {
+    width: min(100%, calc((100dvh - 142px) * 16 / 9));
+    width: 100%;
   }
 }

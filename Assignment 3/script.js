@@ -90,7 +90,7 @@ const mazeBoard = document.querySelector("#mazeBoard");
 console.log(mazeBoard);
 
 if (mazeBoard) {
-  mazeBoard.addEventListener("pointermover", movePlayer);
+  mazeBoard.addEventListener("pointermove", movePlayer);
   mazeBoard.addEventListener("pointerleave", hidePlayer);
 }
 
@@ -345,7 +345,7 @@ function finishMaze() {
   }
 
   finishSummary.textContent =
-    "You finished in" +
+    "You finished in " +
     formatTime(finishTime) +
     " on attempt " +
     attempts +
@@ -405,7 +405,7 @@ function handleWallHit() {
   scareOverlay.classList.add("is-active");
   scareOverlay.setAttribute("aria-hidden", false);
 
-  window.setTimeout(hideScare, 900);
+  window.setTimeout(hideScare, 1800);
 }
 
 // resets the player after touching a wall.
@@ -476,9 +476,9 @@ function getTier(attemptCount, milliseconds) {
 function rectanglesOverlap(firstRectangle, secondRectangle) {
   return (
     firstRectangle.left < secondRectangle.right &&
-    firstRectangle.right < secondRectangle.left &&
+    firstRectangle.right > secondRectangle.left &&
     firstRectangle.top < secondRectangle.bottom &&
-    firstRectangle.bottom < secondRectangle.top
+    firstRectangle.bottom > secondRectangle.top
   );
 }
 
@@ -494,7 +494,7 @@ function getCellCenter(cell) {
   const boardRect = mazeBoard.getBoundingClientRect();
 
   return {
-    x: ((cell.column + 0.5) * boardRect, width) / mazeColumns,
+    x: ((cell.column + 0.5) * boardRect.width) / mazeColumns,
     y: ((cell.row + 0.5) * boardRect.height) / mazeRows,
   };
 }
