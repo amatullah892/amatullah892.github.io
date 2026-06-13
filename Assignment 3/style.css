@@ -1,3 +1,10 @@
+/* Maze Glider is a psychological horror exprience wrapped in a cool, techno aesthetic designed to heighten tension against the player. It is a simple hover maze game, where the user has to navigate through the maze without touching the walls, and if they do touch the walls, after a random number of hits to the wall, a terrifying image suddenly flashes on the screen followed by a loud scream to jump-scare the user.
+
+If the user manages to survive and reach the very end, the game rewards them with a peaceful scenary and relaxing sounds to help them calm down. Plus, it saved you best score, number of attempts and tier, so that they can cntinue playing to try and beat their own record, with less number of hits to the wall.
+
+Tier shows how well you have been doing, if the number of attempt is 1 or less and completes within 35 seconds then they are A tier(the best grade), if number of attempts is 3 or few and finish in 55 seconds or less they are B tier (excellent), if they did not qualify as A or B then the game stops looking at the clock and as long as they have 6 attempts or few they get C tier(good) and finally if they hit the walls more than 6 times they get labeled brave, this means they triggered a bunch of jumpscares but kept playing anyway. */
+
+/*Reusable colors and spacing values. Using variables to make it easier to change the theme in one place.*/
 :root {
   --bg: #111318;
   --panel: #f7f1df;
@@ -12,16 +19,18 @@
   --game-gap: clamp(8px, 1.6vmin, 14px);
 }
 
+/*Makes width and height include padding and borders, which prevents unexpected overflows.*/
+
 * {
   box-sizing: border-box;
 }
-
+/*\Gives the page a full-screen height so the game can fit the viewport, they can play without stressing about scrolling to check their best record and attempts.*/
 html,
 body {
   height: 100%;
   width: 100%;
 }
-
+/*The body is dark because I am going for a techno aesthetic.*/
 body {
   margin: 0;
   overflow: hidden;
@@ -29,18 +38,18 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background: #050705;
 }
-
+/*buttons inherit the page font so they match the rest of the design.*/
 button {
   border: 0;
   font: inherit;
   cursor: pointer;
 }
-
+/*Images should never grow wider than the space they are inside*/
 img {
   display: block;
   max-width: 100%;
 }
-
+/*The app shell centers whichever screen is currently active to fit any screen of any size.*/
 .app-shell {
   width: min(1120px, calc(100vw - (var(--screen-pad) * 2)));
   height: 100dvh;
@@ -50,17 +59,17 @@ img {
   place-items: center;
   padding: var(--screen-pad) 0;
 }
-
+/*every screen in hidden in the start, JavaScript adds .is-active to show one screen at a time*/
 .screen {
   display: none;
   width: 100%;
   min-height: 0;
 }
-
+/*the active screen becomes visible*/
 .screen.is-active {
   display: block;
 }
-
+/*this is the calm ending screen, so it uses the warm color palette instead of black.*/
 .screen--success {
   max-width: 720px;
   max-height: calc(100dvh - (var(--screen-pad) * 2));
@@ -72,26 +81,26 @@ img {
   border-radius: 8px;
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.38);
 }
-
+/*keeps the finished label and summary text centered with the title and button on the success screen for it to look more organized.*/
 .screen--success .eyebrow,
 .screen--success p,
 .screen--success h1 {
   text-align: center;
 }
-
+/*only uses flex when the success screen is active, otherwise it would show while hidden*/
 .screen--success.in-active {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
+/*Auto margins center the small FINISHED label on success screen*/
 .screen--success .eyebrow {
   display: block;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
-
+/*The success title is large, but clamp keeps it from becoming too huge on small screens*/
 .successTitle {
   width: 100%;
   margin-left: auto;
@@ -99,19 +108,21 @@ img {
   font-size: clamp(3rem, 8vmin, 5.4rem);
   text-align: center;
 }
-
+/*A shorted text width makes the result message easier to read that is their best record, attempts and tier.*/
 #finishSummary {
   max-width: 32ch;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
 }
-
+/*positioning the play again button to the center.*/
 .screen--success .primary-button {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
+/* welcome screen.
+adding the a lime green border and glow tell the player that this is the start page, positioning all center within a box*/
 .screen--welcome {
   max-width: 660px;
   max-height: calc(100dvh - (var(--screen-pad) * 2));
@@ -129,66 +140,18 @@ img {
     0 0 34px rgba(183, 255, 104, 0.28),
     0 28px 90px rgba(0, 0, 0, 0.5);
 }
-
+/*The title glows so it feels like a neon arcade sign*/
 .screen--welcome h1 {
   color: var(--lime);
   text-shadow: 0 0 15px rgba(183, 255, 104, 0.8);
 }
-
+/*The welcome paragraph is placed under the title, explaining the simple rules of the game.*/
 .screen--welcome p {
   max-width: 75ch;
   color: #d9ffc4;
   font-weight: 700;
 }
-
-.welcome-art {
-  height: 138px;
-  position: relative;
-  margin-bottom: 18px;
-  overflow: hidden;
-  border-radius: 8px;
-  background: linear-gradient(120deg, #222734, #2d4550 48%, #253022);
-}
-
-.welcome-art span {
-  position: absolute;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: var(--glow);
-  animation: drift 5s ease-in-out infinite;
-}
-@keyframes drift {
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(22px) scale(1.08);
-  }
-}
-
-.welcome-art span:nth-child(1) {
-  left: 9%;
-  right: 28%;
-}
-
-.welcome-art span:nth-child(2) {
-  left: 48%;
-  top: 18%;
-  animation-delay: -1.5s;
-  background: var(--lime);
-  box-shadow: 0 0 32px var(--lime);
-}
-
-.welcome-art span:nth-child(3) {
-  left: 78%;
-  top: 38%;
-  animation-delay: -2.8s;
-  background: var(--coral);
-  box-shadow: 0 0 32px var(--coral);
-}
-
+/*eyebrows are the small texts above a bigger heading, */
 .eyebrow {
   margin: 0 0 6px;
   color: #9740fb;
@@ -197,13 +160,13 @@ img {
   letter-spacing: 0;
   text-transform: uppercase;
 }
-
+/*Simple heading style */
 h1 {
   margin: 0 0 14px;
   font-size: clamp(2.1rem, 5vw, 4.4rem);
   line-height: 1;
 }
-
+/*Simple paragraph style, the max-width keeps text lines from getting too long.*/
 p {
   margin: 0 auto 14px;
   max-width: 38ch;
@@ -211,7 +174,7 @@ p {
   font-size: clamp(0.9rem, 2vmin, 1.02rem);
   line-height: 1.45;
 }
-
+/*common button shape for primary button (start) and ghost button (restart). With padding and border radius for the button-like look.*/
 .primary-button,
 .ghost-button {
   min-height: 42px;
@@ -219,27 +182,28 @@ p {
   border-radius: 8px;
   font-weight: 800;
 }
-
+/*The primary button (start) uses the same lime color as the game border to match the overall aesthetic.*/
 .primary-button {
   margin-top: 10px;
   color: #101318;
   background: var(--lime);
   box-shadow: 0 8px 0 #67a93a;
 }
-
+/*The restart button is more quieter so it does not compete with the maze*/
 .ghost-button {
   color: #f7f1df;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.28);
 }
-
+/*game screen layout.
+The grid gives the header, maze and stats each their own row to make the layout more structured.*/
 .screen--game.is-active {
   height: calc(100dvh - (var(--screen-pad) * 2));
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   gap: var(--game-gap);
 }
-
+/*Header puts the title on the left and restart button on the right*/
 .game-header {
   min-height: 0;
   display: flex;
@@ -248,12 +212,12 @@ p {
   gap: 16px;
   color: white;
 }
-
+/*game heading is smaller than the welcome title so the maze has more space.*/
 .game-header h1 {
   margin-bottom: 0;
   font-size: clamp(1.45rem, 4vmin, 3rem);
 }
-
+/*The green border frames the playable maze area*/
 .maze-wrap {
   min-height: 0;
   padding: clamp(6px, 1.2vw, 12px);
@@ -266,7 +230,7 @@ p {
     0 0 26px rgba(183, 255, 104, 0.18),
     0 28px 90px rgba(0, 0, 0, 0.38);
 }
-
+/*The maze board is the coordinate system for the walls, start, end, player and trail*/
 .maze-board {
   position: relative;
   width: min(100%, calc((100dvh - 174px) * 16 / 9));
@@ -278,14 +242,15 @@ p {
   border-radius: 0;
   background: #000000;
 }
-
+/*Each wall is a square created by Javascript and placed inside the board. This defines the position and color of the wall*/
 .wall {
   position: absolute;
   border-radius: 0;
   background: var(--wall);
   box-shadow: 0 0 6px rgba(255, 255, 255, 0.18);
 }
-
+/*start and end markers in the maze
+positioning and defining the size of the markers within the maze*/
 .start-zone,
 .end-zone {
   transform: translate(-50%, -50%);
@@ -300,28 +265,29 @@ p {
   border: 2px solid #ffffff;
   pointer-events: none;
 }
-
+/*The start maker is green and sits near the top-left maze cell, with a slight glow*/
 .start-zone {
   left: 4.84%;
   top: 7.89%;
   background: #1eb83b;
   box-shadow: 0 0 16px rgba(30, 184, 59, 0.78);
 }
-
+/*the end marker is purple and sites near the botton-right maze cell.*/
 .end-zone {
   left: 95.16%;
   top: 92.11%;
   background: #6d25b8;
   box-shadow: 0 0 16px rgba(109, 37, 184, 0.78);
 }
-
+/*The cat and food images fill their circular markers without stretching it oddly*/
 .start-zone img,
 .end-zone img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-
+/*custom hover cursor
+The real mouse cursor is hidden on the board, so this red dot becomes the player, with a slight glow.*/
 .player {
   position: absolute;
   z-index: 5;
@@ -341,14 +307,14 @@ p {
   transform: translate(-50%, -50%);
   opacity: 0;
 }
-
+/*The glowing trail layer sits above the maze but does not block mouse movement adding, more enagement to the game */
 .trail-layer {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 4;
 }
-
+/*the trail is made using dot, each trail dot fades away after javascript creates it*/
 .trail-dot {
   position: absolute;
   width: clamp(8px, 1.5vmin, 12px);
@@ -359,21 +325,21 @@ p {
   transform: translate(-50%, -50%);
   animation: fadeTrail 0.7s ease-out forwards;
 }
-
+/*the trail grows and disappears, which makes the movement feel more smoother*/
 @keyframes fadeTrail {
   to {
     opacity: 0;
     transform: translate(-50%, -50%) scale(2.5);
   }
 }
-
+/*stats is the blocks to attempts, best record and tier that sits at the bottom of the maze, it uses 3 equal columns on desktop so that the three line-up*/
 .stats-grid {
   min-height: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(8px, 1.4vmin, 12px);
 }
-
+/*each box is a small card*/
 .stats-grid article {
   min-height: 0;
   padding: clamp(8px, 1.8vmin, 14px);
@@ -381,7 +347,7 @@ p {
   background: #f7f1df;
   border: clamp(2px, 0.5vmin, 3px) solid #ffffff;
 }
-
+/*the start label is small and uppercase so the number/rank stands out*/
 .stats-grid span {
   display: block;
   margin-bottom: 6px;
@@ -390,13 +356,14 @@ p {
   font-weight: 700;
   text-transform: uppercase;
 }
-
+/*the stat value is larger because it is the important information*/
 .stats-grid strong {
   display: block;
   font-size: clamp(0.95rem, 2.4vw, 1.45rem);
   line-height: 1.1;
 }
-
+/*scare overlay
+fixed positions covers the whole browser window, no matter where the maze is*/
 .scare-overlay {
   position: fixed;
   inset: 0;
@@ -405,27 +372,12 @@ p {
   place-items: stretch;
   background: #050505;
 }
-
+/*javascript adds .is-actice when the jumspcare should appear*/
 .scare-overlay.is-active {
   display: grid;
   animation: flashScare 0.8s linear;
 }
-
-@keyframes flashScare {
-  0%,
-  18%,
-  38%,
-  62%,
-  100% {
-    background: #050505;
-  }
-  10%,
-  30%,
-  52% {
-    background: var(--wall-hot);
-  }
-}
-
+/*the scare image fills the viewport for a full-screen jumpscare making it more scary, the image pulses as if it will pop out of the screen.*/
 .scare-image {
   display: none;
   width: 100vw;
@@ -436,7 +388,7 @@ p {
   animation: scarePulse 0.75s infinite alternate ease-in-out;
   transform: scale(1.16);
 }
-
+/*this pulse keeps the scare image pulsing until the javascript hides it*/
 @keyframes scarePulse {
   from {
     transform: scale(1.08);
@@ -448,11 +400,11 @@ p {
     filter: contrast(1.35) saturate(1.2);
   }
 }
-
+/*only the chosen scare image is displayed and animated*/
 .scare-image.is-active {
   display: block;
 }
-
+/*the calm image belongs to the success screen and sould fit inside the card borders*/
 .calm-img {
   display: block;
   width: min(620px, 100%);
@@ -462,47 +414,51 @@ p {
   border: 4px solid white;
   object-fit: cover;
 }
-
+/*small-screen layout
+on narrow screens the page can scroll and stats stack into one column*/
 @media (max-width: 760px) {
+  /*allow scrolling on phones bacause the board and sats may need more height*/
   body {
     overflow: auto;
   }
+  /*mobile screen use natural height instead on forcing everything into one viewport*/
   .app-shell {
     min-height: 100dvh;
     height: auto;
-  }
+  } /*the game rows stack naturally on small screens*/
   .screen--game.is-active {
     min-height: calc(100dvh - (var(--screen-pad) * 2));
     height: auto;
     grid-template-rows: auto auto auto;
-  }
+  } /*align the header to the top when there is less horizontal zoom*/
   .game-header {
     align-items: start;
   }
-
+  /*a taller board shape is easier to use on narrow screens*/
   .maze-board {
     width: 100%;
     max-height: none;
     aspect-ratio: 10/13;
   }
-
+  /*stats become a single column so they do not squeeze*/
   .stats-grid {
     grid-template-columns: 1fr;
   }
 }
-
+/*extra rules for short desktop screens*/
 @media (max-height: 620px) and (min-width: 761px) {
+  /*shrink the heading so the maze keeps enough room*/
   .game-header h1 {
     font-size: clamp(1.2rem, 3.2vmin, 2.2rem);
-  }
+  } /*keep stats side-by-side on wide screens even then height is short*/
   .stats-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-
+  /*reduce stat padding so the maze has more vertical space*/
   .stats-grid article {
     padding: 8px, 10px;
   }
-
+  /*the mazze still fills the green border width on short screens*/
   .maze-board {
     width: min(100%, calc((100dvh - 142px) * 16 / 9));
     width: 100%;

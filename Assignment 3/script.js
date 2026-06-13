@@ -1,8 +1,9 @@
-//The welcome page
+/*The welcome page*/
 const welcomeScreen = document.querySelector("#welcomeScreen");
 console.log(welcomeScreen);
-
+/*shows the welcome screen and hides other screens*/
 function showWelcomeScreen() {
+  /*checks if each elements exists before changing it, which prevents errors if the HTML changes*/
   if (gameScreen) {
     gameScreen.classList.remove("is-active");
   }
@@ -14,10 +15,10 @@ function showWelcomeScreen() {
   }
 }
 
-//The maze game page
+/*The maze game page*/
 const gameScreen = document.querySelector("#gameScreen");
 console.log(gameScreen);
-
+/*shows the maze game screen and hides the other screens*/
 function showGameScreen() {
   if (welcomeScreen) {
     welcomeScreen.classList.remove("is-active");
@@ -30,11 +31,11 @@ function showGameScreen() {
   }
 }
 
-// The congratulations page when the user wins the game by reaching the end.
+/*The congratulations page when the user wins the game by reaching the end.*/
 
 const successScreen = document.querySelector("#successScreen");
 console.log(successScreen);
-
+/*\shows the success screen after the player wins the game by reaching the end*/
 function showSuccessScreen() {
   if (welcomeScreen) {
     welcomeScreen.classList.remove("is-active");
@@ -48,72 +49,76 @@ function showSuccessScreen() {
   }
 }
 
-// The start button on the welcome page.
-
+/*the start button on the welcome page*/
 const startButton = document.querySelector("#startButton");
 console.log(startButton);
-
+/*clicking start begins a new maze run*/
 if (startButton) {
   startButton.addEventListener("click", startMaze);
 }
 
-// The restart button above the maze.
-
+/*the restart button above the maze*/
 const restartButton = document.querySelector("#restartButton");
 console.log(restartButton);
-
+/*restart uses the same setup as start*/
 if (restartButton) {
   restartButton.addEventListener("click", startMaze);
 }
 
-// The play again button on the congratulations page.
+/*the play again button on the congratulations page*/
 const playAgainButton = document.querySelector("#playAgainButton");
 console.log(playAgainButton);
-
+/*play again also starts the maze from the beginning*/
 if (playAgainButton) {
   playAgainButton.addEventListener("click", startMaze);
 }
 
-// starts the maze game when start button is clicked.
-
+/*starts the maze game when start button is clicked*/
 function startMaze() {
+  /*stop the ending music so it does not play over the maze*/
   stopCalmSound();
+  /*attempsts starts at 1 because beginning the maze counts as the first try*/
   attempts = 1;
+  /*save the start time so the finish time can be calculated later*/
   startedAt = Date.now();
+  /*refresh the stats before showing the game*/
   updateStats();
   showGameScreen();
+  /*wait one animation frame so the board has its real size before  positioning the player*/
   requestAnimationFrame(resetPlayerToStart);
 }
 
-// The maze board that the player navigates through.
+/*the maze board that the player navigates through*/
 const mazeBoard = document.querySelector("#mazeBoard");
 console.log(mazeBoard);
-
+/*pointer move works for mouse, trackpad and touch like devices*/
 if (mazeBoard) {
   mazeBoard.addEventListener("pointermove", movePlayer);
+  /*hide the custom player dot when the real cursor leaves the board*/
   mazeBoard.addEventListener("pointerleave", hidePlayer);
 }
 
-//moves the red glowing cursor whenever the user moves their mouse in the maze.
+/*moves the red glowing cursor whenever the user moves their mouse in the maze*/
 
 function movePlayer(event) {
+  /*ignore movement while the scare overlay is active*/
   if (isScaring) {
     return;
-  }
+  } /*if the board or player is missing, stop instead of crashing the game*/
   if (!mazeBoard || !player) {
     return;
   }
-
+  /*get the boards position on the page so cursor coordinates can be converted into board coorsinates*/
   const boardRect = mazeBoard.getBoundingClientRect();
   const x = event.clientX - boardRect.left;
   const y = event.clientY - boardRect.top;
-
+  /*move the red player dot to the same place as the cursor*/
   player.style.left = x + "px";
   player.style.top = y + "px";
   player.style.opacity = 1;
-
+  /*add a fading dot behind the player for the glowing trail effect*/
   addTrailDot(x, y);
-
+  /*touching a wall triggers the scare/reset. reaching  the end triggers the success screen*/
   if (playerHitsWall()) {
     handleWallHit();
   } else if (playerReachedEnd()) {
@@ -121,7 +126,7 @@ function movePlayer(event) {
   }
 }
 
-//hides the red cursor when the mouse leaves the maze.
+/*hides the red cursor when the mouse leaves the maze*/
 function hidePlayer() {
   if (!player) {
     return;
@@ -130,18 +135,19 @@ function hidePlayer() {
   player.style.opacity = 0;
 }
 
-//the red glowing cursor and player
+/*the red glwoing cursor and player*/
 
 const player = document.querySelector("#player");
 console.log(player);
 
-//moves the red cursor back to the cat start point.
+/*moves the red cursor back to the cat start point*/
 
 function resetPlayerToStart() {
+  /*all three elements are needed to reset the player and clear the trail*/
   if (!player || !trailLayer || !mazeBoard) {
     return;
   }
-
+  /*the start position is based on the maze frid cell, not pixels*/
   const startPosition = getCellCenter(startCell);
 
   player.style.left = startPosition.x + "px";
@@ -150,48 +156,49 @@ function resetPlayerToStart() {
   trailLayer.innerHTML = "";
 }
 
-//checks if the player is touching any wall.
+/*checks if the player is touching any wall*/
 
 function playerHitsWall() {
   if (!player) {
     return false;
   }
-
+  /*this gives the real on-screen box for the player and each wall*/
   const playerRect = player.getBoundingClientRect();
   const walls = document.querySelectorAll(".wall");
-
+  /*if any wall overlaps the player, the player has hit the wall*/
   return Array.from(walls).some(function checkWall(wall) {
     const wallRect = wall.getBoundingClientRect();
     return rectanglesOverlap(playerRect, wallRect);
   });
 }
 
-//checks if the player has reached the end food icon.
-
+/*checks if the player has reached the end food icon*/
 function playerReachedEnd() {
   if (!mazeBoard || !player) {
     return false;
   }
-
+  /*work out where the player is inside the board*/
   const boardRect = mazeBoard.getBoundingClientRect();
   const playerRect = player.getBoundingClientRect();
+  /*the end positon is the center of the end cell*/
   const endPosition = getCellCenter(endCell);
+  /*cell sizes changes when the board resizes, so calculate it every time*/
   const cellWidth = boardRect.width / mazeColumns;
   const cellHeight = boardRect.height / mazeRows;
   const playerCenterX = playerRect.left + playerRect.width / 2 - boardRect.left;
   const playerCenterY = playerRect.top + playerRect.height / 2 - boardRect.top;
-
+  /*the player wins if their center is close to the end cell center*/
   return (
     Math.abs(playerCenterX - endPosition.x) < cellWidth &&
     Math.abs(playerCenterY - endPosition.y) < cellHeight
   );
 }
 
-// The layer that holds the glowning trail.
+/*the layer that holds the glowing trail*/
 const trailLayer = document.querySelector("#trailLayer");
 console.log(trailLayer);
 
-//creates a small glowing trail dot behind the cursor.
+/*creates a small glwoing trail dot behind the cursor*/
 function addTrailDot(x, y) {
   const dot = document.createElement("span");
 
@@ -199,7 +206,7 @@ function addTrailDot(x, y) {
   dot.style.left = x + "px";
   dot.style.top = y + "px";
   trailLayer.appendChild(dot);
-
+  /*remove the dot after the CSS fade finishes so the page does not fill with old dots*/
   window.setTimeout(removeTrailDot, 700);
 
   function removeTrailDot() {
@@ -207,25 +214,25 @@ function addTrailDot(x, y) {
   }
 }
 
-//The scary image overlay
+/*the scary image overlay*/
 const scareOverlay = document.querySelector("#scareOverlay");
 console.log(scareOverlay);
 
-// hiding the scary image after it appears.
+/*hididng the scary image after it appears*/
 function hideScare() {
   scareOverlay.classList.remove("is-active");
   scareOverlay.setAttribute("aria-hidden", true);
+  /*after the scare ends the player is back to the start*/
   resetAfterWallHit(0);
 }
 
-// The scary images that rotate each time the scare appears.
-
+/*the scary images that rotate each time the scare appears*/
 const scareImages = document.querySelectorAll(".scare-image");
 console.log(scareImages);
 
-//chooses which image to show next.
-
+/*chooses which image to show next*/
 function showNextScareImage() {
+  /*hide all scare images first so only one is visible at a time*/
   scareImages.forEach(hideScareImage);
 
   function hideScareImage(image) {
@@ -234,50 +241,51 @@ function showNextScareImage() {
   if (scareImages.length === 0) {
     return;
   }
-
+  /*move to the next in the list*/
   scareIndex++;
-
+  /*if the index goes past the lat image, loop back to the first image*/
   if (scareIndex >= scareImages.length) {
     scareIndex = 0;
   }
+  /*show the chosen image, CSS handles the pulse animations*/
   scareImages[scareIndex].classList.add("is-active");
 }
 
-//The loud horror sound
+/*loud horror scream sound*/
 
 const screamAudio = document.querySelector("#screamAudio");
 console.log(screamAudio);
 
-//plays the loud horror sound
+/*plays the horror shound*/
 function playScareSound() {
   if (!screamAudio) {
     return;
   }
-
+  /*rewind before playing so the scream slways starts from beginning*/
   screamAudio.pause();
   screamAudio.currentTime = 0;
+  /*browser voluse goes from 0 to 1 is the loudest, it was made even more loud in Reaper*/
   screamAudio.volume = 1;
   screamAudio.play();
 }
 
-// The calming sound at the end
-
+/*calming sound*/
 const calmAudio = document.querySelector("#calmAudio");
 console.log(calmAudio);
 
-//plays the calming sound as the congratulations page appears.
+/*plays the calming sound as the congratulations page appears.*/
 
 function playCalmSound() {
   if (!calmAudio) {
     return;
   }
-
+  /*calm audio is quieter than scare audio so the screen feels peaceful and understimulating*/
   stopCalmSound();
   calmAudio.volume = 0.55;
   calmAudio.play();
 }
 
-//stops the calming sound when a game starts.
+/*stops the calming sound when a game starts*/
 function stopCalmSound() {
   if (!calmAudio) {
     return;
@@ -286,16 +294,16 @@ function stopCalmSound() {
   calmAudio.currentTime = 0;
 }
 
-// the number of attempts box.
+/*the number of attempts box */
 const attemptsBox = document.querySelector("#attemptsBox");
 console.log(attemptsBox);
 
-//the tier box
+/*the tier box */
 
 const tierBox = document.querySelector("#tierBox");
 console.log(tierBox);
 
-//the best record box
+/*the best record box */
 const bestBox = document.querySelector("#bestBox");
 console.log(bestBox);
 
@@ -457,15 +465,15 @@ function getTier(attemptCount, milliseconds) {
   const seconds = milliseconds / 1000;
 
   if (attemptCount <= 1 && seconds <= 35) {
-    return "S Tier";
-  }
-
-  if (attemptCount <= 3 && seconds <= 55) {
     return "A Tier";
   }
 
+  if (attemptCount <= 3 && seconds <= 55) {
+    return "B Tier";
+  }
+
   if (attemptCount <= 6) {
-    return " B Tier";
+    return "C Tier";
   }
 
   return "Brave";
