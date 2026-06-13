@@ -9,7 +9,11 @@
     <script src="script.js" defer></script>
   </head>
   <body>
+    <!--the app shell araps all three screen.
+    javascript shows one screen at a time by adding the is-active class.-->
     <main class="app-shell">
+      <!--welcome screen
+      adding heading and body text to the welcome screen-->
       <section class="screen screen--welcome is-active" id="welcomeScreen">
         <h1 id="welcomeTitle">Maze Glider</h1>
         <p>DO NOT TOUCH THE WHITE WALLS OR THERE WILL BE CONSEQUENCES</p>
@@ -17,22 +21,25 @@
           Navigate through the maze from the start to end using hover. Turn your
           volume up for a better experience.
         </p>
-
+        <!--adding a start button so they can enter the maze game-->
         <button class="primary-button" id="startButton" type="button">
           Start
         </button>
       </section>
+      <!--game screen
+      adding heading and eyebrow text above the maze -->
       <section class="screen screen--game" id="gameScreen">
         <div class="game-header">
           <div>
             <p class="eyebrow">Maze Glider</p>
             <h1 id="mazeTitle">Be careful you do not want to anger them...</h1>
           </div>
+          <!--creating a restart button if they are not satisfied they can restart again-->
           <button class="ghost-button" id="restartButton" type="button">
             Restart
           </button>
         </div>
-
+        <!--defining the maze and adding the images for the start and end of the maze-->
         <div class="maze-wrap">
           <div class="maze-board" id="mazeBoard">
             <div class="start-zone" id="startZone">
@@ -41,11 +48,12 @@
             <div class="end-zone" id="endZone">
               <img src="food.png" alt="food end" />
             </div>
+            <!--layer that will hold the glowing trail that will follow the cursor-->
             <div class="player" id="player"></div>
             <div class="trail-layer" id="trailLayer"></div>
           </div>
         </div>
-
+        <!--adding the stats cards that will sit under the maze with number of attempts, their tier and best record-->
         <div class="stats-grid">
           <article>
             <span>Attempts</span>
@@ -61,7 +69,7 @@
           </article>
         </div>
       </section>
-
+      <!--the calm picture that will appear when the player gets to the end point with heading and body text and a play again button-->
       <section class="screen screen--success" id="successScreen">
         <img class="calm-img" src="end.png" alt="landscape" />
         <p class="eyebrow">Congratulations</p>
@@ -72,11 +80,13 @@
         </button>
       </section>
     </main>
+    <!--scare images-->
     <div class="scare-overlay" id="scareOverlay">
       <img class="scare-image" src="1.jpg" alt="scary image" />
       <img class="scare-image" src="2.jpg" alt="scary image" />
       <img class="scare-image" src="3.png" alt="scary image" />
     </div>
+    <!--screaming audio and calm audio-->
     <audio id="screamAudio" src="scream.mp3" preload="auto"></audio>
     <audio id="calmAudio" src="calm.mp3" preload="auto" loop></audio>
   </body>

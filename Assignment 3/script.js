@@ -307,14 +307,15 @@ console.log(tierBox);
 const bestBox = document.querySelector("#bestBox");
 console.log(bestBox);
 
-//updates attempts, tier, and best record boxes.
+/*updates attempts, tier, and best record boxes.*/
 function updateStats() {
+  /*read the saved best record before writing text into the stat boxes*/
   const bestRecord = getBestRecord();
-
+  /*show how many tries the current run has taken*/
   if (attemptsBox) {
     attemptsBox.textContent = attempts;
   }
-
+  /*the tier changes based on attempts and time*/
   if (tierBox) {
     if (attempts === 0) {
       tierBox.textContent = "Untested";
@@ -322,7 +323,7 @@ function updateStats() {
       tierBox.textContent = getTier(attempts, Date.now() - startedAt);
     }
   }
-
+  /*if the player has finished before, show their best saved resuts*/
   if (bestBox) {
     if (bestRecord) {
       bestBox.textContent =
@@ -333,25 +334,27 @@ function updateStats() {
   }
 }
 
-// The paragraph that tells the player their finished result.
+/*the paragraph that tells the player their finished result*/
 
 const finishSummary = document.querySelector("#finishSummary");
 console.log(finishSummary);
 
-//runs when the player reaches the food icon.
+/*runs when the player reaches the end food icon*/
 function finishMaze() {
   if (!finishSummary) {
     return;
   }
-
+  /*the finish time is current time minus when the player strted*/
   const finishTime = Date.now() - startedAt;
+  /*final tier is calculated one last time using the finish time*/
   const finalTier = getTier(attempts, finishTime);
+  /*compare this run to the saved best record */
   const bestRecord = getBestRecord();
-
+  /*save the new record only if it is the first record or faster than the old one*/
   if (!bestRecord || finishTime < bestRecord.time) {
     saveBestRecord(finishTime, attempts);
   }
-
+  /*build the message shown on the congratulations screen*/
   finishSummary.textContent =
     "You finished in " +
     formatTime(finishTime) +
@@ -360,54 +363,62 @@ function finishMaze() {
     ". Final rank: " +
     finalTier +
     ".";
-
+  /*refresh stats, witch screens and play the calm ending audio*/
   updateStats();
   showSuccessScreen();
   playCalmSound();
 }
 
-//These values store what is happening in the game
+/*these values store what is happening in the game.
+  attempts starts at 0 because the player has not clicked start yet*/
 let attempts = 0;
+/*startedAt stores the time when the current run began*/
 let startedAt = 0;
+/*isScaring stops movement while the jumpscare is showing*/
 let isScaring = false;
+/*scareIndex rememebers which scare image was used last*/
 let scareIndex = 0;
+/*this counts how many wall hits are left before next scare*/
 let scareHitsRemaining = getNextScareDelay();
 
-//these values control the maze size and the start and end positions.
+/*these values control the maze size and start and end positions*/
+/*the maze uses an odd number of columns/rows so walls and paths can alternate cleanly*/
 
 const mazeColumns = 31;
 const mazeRows = 19;
+/*starts and end are written as grid cells, not pixels so they scale with the board*/
 const startCell = { column: 1, row: 1 };
 const endCell = { column: 29, row: 17 };
 
-//this is the name used to save the best record in local storage
-
+/*this is the name used to save the best record in local storage*/
 const bestRecordKey = "glowMazeBestRecord";
 
-// building the maze and showing the first set of stats when page loads
-
+/*building the maze and showing the first set of stats when page loads*/
 buildMaze();
 updateStats();
 
-//Runs whenever the player touches a wall
+/*runs whenever the player touches wall*/
 function handleWallHit() {
+  /*if a scare/reset is already happening, ignore extra wall hits*/
   if (isScaring) {
     return;
   }
-
+  /*marks the scale/reset state so the player cannot trigger this function repeatedly*/
   isScaring = true;
+  /*a wall hit counts as another attempt*/
   attempts++;
+  /*count down toward the next jumpscare*/
   scareHitsRemaining--;
   updateStats();
 
-  // most wall hits only reset the player. the scary image appears after a random number of wall hits.
-
+  /*most wall hits only reset the player, the scary image appears after a random number of wall hits*/
   if (scareHitsRemaining > 0) {
     resetAfterWallHit(180);
     return;
   }
-
+  /*pick a new random delay for the scare after this one*/
   scareHitsRemaining = getNextScareDelay();
+  /*prepare the scare image and sound*/
   showNextScareImage();
   playScareSound();
   scareOverlay.classList.add("is-active");
@@ -416,35 +427,38 @@ function handleWallHit() {
   window.setTimeout(hideScare, 1800);
 }
 
-// resets the player after touching a wall.
+/*player resets after hitting the wall*/
 function resetAfterWallHit(delay) {
+  /*a delay gives the player a tiny pause before being returned to the start*/
   window.setTimeout(resetNow, delay);
 
   function resetNow() {
     resetPlayerToStart();
+    /*movemnt is allowed again after reset is complete*/
     isScaring = false;
   }
 }
 
-// chooses a random number of wall hits beofre the scary image appears.
-
+/*chooses a random number of wall hits before the scare image appears*/
 function getNextScareDelay() {
+  /*returns a number from 2 to 5 so the scare does not happen on every wall hit*/
   return Math.floor(Math.random() * 4) + 2;
 }
 
-// gets the best record from local storage
+/*gets the best record form the local storage*/
 function getBestRecord() {
   const savedRecord = localStorage.getItem(bestRecordKey);
-
+  /*no saved value means the player has not finished before*/
   if (!savedRecord) {
     return null;
   }
-
+  /*localStorage stores text, so convert it back into an object*/
   return JSON.parse(savedRecord);
 }
 
-//saves the best record to local storage
+/*saves the best record to local storage*/
 function saveBestRecord(time, attemptCount) {
+  /*store both time and attempts so the bext box can show a useful record*/
   const record = {
     time: time,
     attempts: attemptCount,
@@ -453,14 +467,14 @@ function saveBestRecord(time, attemptCount) {
   localStorage.setItem(bestRecordKey, JSON.stringify(record));
 }
 
-//changes milliseconds into seconds text.
-
+/*changes miliseconds into seconds text*/
 function formatTime(milliseconds) {
+  /*the game measures time in milliseconds, but seconds are easier for players to read*/
   const seconds = milliseconds / 1000;
   return seconds.toFixed(1) + "s";
 }
 
-// chooses the player's tier based on attempts and time.
+/*chooses the player's tier based on attempts and time*/
 function getTier(attemptCount, milliseconds) {
   const seconds = milliseconds / 1000;
 
@@ -479,9 +493,9 @@ function getTier(attemptCount, milliseconds) {
   return "Brave";
 }
 
-// checks if two rectangles are overlapping
-
+/*checks if two rectangles are overlapping*/
 function rectanglesOverlap(firstRectangle, secondRectangle) {
+  /*two boxes overlap when each one crosses into the others horizontal and vertical space*/
   return (
     firstRectangle.left < secondRectangle.right &&
     firstRectangle.right > secondRectangle.left &&
@@ -490,7 +504,7 @@ function rectanglesOverlap(firstRectangle, secondRectangle) {
   );
 }
 
-//finds the centre of a maze cell
+/*finds the center of a maze cell*/
 function getCellCenter(cell) {
   if (!mazeBoard) {
     return {
@@ -498,29 +512,28 @@ function getCellCenter(cell) {
       y: 0,
     };
   }
-
+  /*the board size can change with the viewport, so measure it fresh each time*/
   const boardRect = mazeBoard.getBoundingClientRect();
-
+  /*add 0.5 to move from the cell's corner to the cell's center*/
   return {
     x: ((cell.column + 0.5) * boardRect.width) / mazeColumns,
     y: ((cell.row + 0.5) * boardRect.height) / mazeRows,
   };
 }
 
-// the function below create the maze wall patterns
-//builds the maze on scree
-
+/*builds the maze wall patterns*/
 function buildMaze() {
   if (!mazeBoard) {
     return;
   }
-
+  /*a grid is easier to thick about than placing every wall by hand*/
   const mazeGrid = makeMazeGrid();
+  /*convert one grid cell into a percentage size so the maze scales with the board*/
   const wallWidth = 100 / mazeColumns;
   const wallHeigth = 100 / mazeRows;
-
+  /*removed old walls before adding new ones, so rebuilding does not duplicate walls*/
   mazeBoard.querySelectorAll(".wall").forEach(removeWall);
-
+  /*loop through every cell, if the grid says 1, place a wall there*/
   for (let row = 0; row < mazeRows; row++) {
     for (let column = 0; column < mazeColumns; column++) {
       if (mazeGrid[row][column] === 1) {
@@ -530,41 +543,49 @@ function buildMaze() {
   }
 }
 
-// remove an old wall
+/*removes an old wall*/
 function removeWall(wall) {
   wall.remove();
 }
 
-// adds one wall sqaure to the maze
+/*adds one wall square to the maze*/
 function addWall(column, row, wallWidth, wallHeight) {
+  /*creates a div because each wall is a simple rectangular block*/
   const wall = document.createElement("div");
 
   wall.className = "wall";
+  /*percentanges make the wall positions responsive instead of fixed to one screen size*/
   wall.style.left = column * wallWidth + "%";
   wall.style.top = row * wallHeight + "%";
   wall.style.width = wallWidth + "%";
   wall.style.height = wallHeight + "%";
+  /*prepend puts walls behind the start/end/player elements because those have higher z-index*/
   mazeBoard.prepend(wall);
 }
 
-// creates a maze grid using 1 for walls and 0 for paths
-
+/*creates a maze grid using 1 for walls and 0 for paths*/
 function makeMazeGrid() {
+  /*seeded random keeps the maze looking random but reatable every page load*/
   const randomNumber = seededRandom(52);
+  /*start with a grid full of walls then carve through it*/
   const grid = makeWallGrid();
+  /*the start cell must be open so the player can begin there*/
   const stack = [startCell];
-
+  /*the start cell mist be open so the player can begin there*/
   grid[startCell.row][startCell.column] = 0;
-
+  /*keep carving until there are no cells left to explore*/
   while (stack.length > 0) {
     const currentCell = stack[stack.length - 1];
     const nextCell = getNextCell(currentCell, grid, randomNumber);
-
+    /*if there is nowhere to go, backtrack to the previous cell*/
     if (!nextCell) {
       stack.pop();
     } else {
+      /*open the wall between the current cell and the next cell*/
       grid[nextCell.wallRow][nextCell.wallColumn] = 0;
+      /*open the next cell itself*/
       grid[nextCell.row][nextCell.column] = 0;
+      /*continue exploring from the next cell*/
       stack.push({
         column: nextCell.column,
         row: nextCell.row,
@@ -575,25 +596,25 @@ function makeMazeGrid() {
   return grid;
 }
 
-//starts with a grid that is all walls.
+/*starts with a grid that is all walls*/
 function makeWallGrid() {
   const grid = [];
-
+  /*make each row*/
   for (let row = 0; row < mazeRows; row++) {
     const rowCells = [];
-
+    /*fill each row with wall cells*/
     for (let column = 0; column < mazeColumns; column++) {
       rowCells.push(1);
     }
-
+    /*add the finished row to the whole grid*/
     grid.push(rowCells);
   }
   return grid;
 }
 
-// finds the next path cell while building the maze
-
+/*finds the next path cell while building the maze*/
 function getNextCell(currentCell, grid, randomNumber) {
+  /*move two cells at a time so there is always a wall between path vells to carve through*/
   const directions = shuffleWithSeed(
     [
       { column: 2, row: 0 },
@@ -603,16 +624,17 @@ function getNextCell(currentCell, grid, randomNumber) {
     ],
     randomNumber,
   );
-
+  /*try each directions until one works*/
   for (let index = 0; index < directions.length; index++) {
     const direction = directions[index];
     const nextColumn = currentCell.column + direction.column;
     const nextRow = currentCell.row + direction.row;
-
+    /*only use cells that are inside the maze and still walls*/
     if (cellCanBeUsed(nextColumn, nextRow, grid)) {
       return {
         column: nextColumn,
         row: nextRow,
+        /*this is the wall halfway between the current cell and next cell*/
         wallColumn: currentCell.column + direction.column / 2,
         wallRow: currentCell.row + direction.row / 2,
       };
@@ -621,8 +643,9 @@ function getNextCell(currentCell, grid, randomNumber) {
   return null;
 }
 
-// checks if a cell can become a path
+/*checks if a cell can become a path*/
 function cellCanBeUsed(column, row, grid) {
+  /*the outer edge stays as walls and only untouched cells can become paths*/
   return (
     column > 0 &&
     column < mazeColumns - 1 &&
@@ -632,31 +655,33 @@ function cellCanBeUsed(column, row, grid) {
   );
 }
 
-// this makes the maze random but still the same everytime the page loads.
-
+/*this makes the maze random but still same eveyr time the page loads*/
 function seededRandom(seed) {
+  /*store the current random value inside this function*/
   let value = seed;
 
   function getRandomNumber() {
+    /*this formula creates a repeatable pseudo-random number form the previous value*/
     value = (value * 1664525 + 1013904223) % 4294967296;
+    /*return a decimal between 0 to 1, like math.random()*/
     return value / 4294967296;
   }
-
+  /*return the random-number function so other code can call it later*/
   return getRandomNumber;
 }
 
-//shuffles the directions when is being created.
-
+/*shuffles the directions when the maze is being created*/
 function shuffleWithSeed(items, randomNumber) {
+  /*slice makes a copy so the original directions array is not changed*/
   const shuffledItems = items.slice();
 
   for (let index = shuffledItems.length - 1; index > 0; index--) {
     const swapIndex = Math.floor(randomNumber() * (index + 1));
     const firstItems = shuffledItems[index];
-
+    /*swap the two items*/
     shuffledItems[index] = shuffledItems[swapIndex];
     shuffledItems[swapIndex] = firstItems;
   }
-
+  /*return the shuffled copy*/
   return shuffledItems;
 }
